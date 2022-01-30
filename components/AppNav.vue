@@ -1,251 +1,173 @@
 <template>
-  <nav class="fixed w-full px-6 py-2 bg-orange-500">
-    <div class="flex items-center justify-between">
-      <!-- Header logo -->
-      <div>
-        <a href="/" class="text-2xl font-bold">
-          <img src="~/assets/images/logo.png" alt="Logo" class="h-16" />
+  <nav
+    id="header"
+    class="fixed w-full z-30 top-0"
+    :class="isScrolled ? 'scrolled bg-white' : ''"
+  >
+    <div
+      class="
+        w-full
+        container
+        mx-auto
+        flex flex-wrap
+        items-center
+        justify-between
+        mt-0
+        py-2
+      "
+    >
+      <div class="pl-4 flex items-center">
+        <a
+          class="
+            toggleColour
+            text-white
+            no-underline
+            hover:no-underline
+            font-bold
+            text-2xl
+            lg:text-4xl
+          "
+          href="#"
+        >
+          <!--Icon from: http://www.potlabicons.com/ -->
+          <svg
+            class="h-12 fill-current inline"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            data-name="Grupo 18"
+            viewBox="0 0 129.581 102.235"
+          >
+            <defs>
+              <clipPath id="clip-path">
+                <rect
+                  id="Rectángulo_9"
+                  data-name="Rectángulo 9"
+                  width="129.581"
+                  height="102.235"
+                  fill="none"
+                ></rect>
+              </clipPath>
+            </defs>
+            <g id="Grupo_17" data-name="Grupo 17" clip-path="url(#clip-path)">
+              <path
+                class="path"
+                data-name="Trazado 92"
+                d="M61.383,13.232a9.516,9.516,0,1,1-9.516,9.516,9.516,9.516,0,0,1,9.516-9.516"
+              ></path>
+              <path
+                class="path"
+                data-name="Trazado 93"
+                d="M122.558,102.154c-5.986.094-4.483.122-19.088,0-23.7-.2-26.182-15.922-26.182-24.477V54.567h-.209c-13.368-.014-15.447,7.022-15.692,10.2V98.2a4.429,4.429,0,0,1-.842,2.928,3.321,3.321,0,0,1-2.676.993H46.1a4.52,4.52,0,0,1-3.007-.741,3.817,3.817,0,0,1-.821-2.871V95.823a8.029,8.029,0,0,1-.172-2.288c.079-1.26.136-2.605.172-4.073V65.338a9.1,9.1,0,0,0-.993-4.152,12.142,12.142,0,0,0-2.619-3.46,12.516,12.516,0,0,0-3.7-2.368,10.66,10.66,0,0,0-4.2-.87,9.539,9.539,0,0,0-3.741.813,12.655,12.655,0,0,0-3.518,2.273,13.4,13.4,0,0,0-2.7,3.411,10.016,10.016,0,0,0-1.245,4.252V98.348a4.934,4.934,0,0,1-.331,1.734,2.771,2.771,0,0,1-.993,1.324,4.7,4.7,0,0,1-1.252.561,5.4,5.4,0,0,1-1.345.151H4.13a4.089,4.089,0,0,1-3.166-1.065A4.134,4.134,0,0,1,0,98.2V41.228a3.744,3.744,0,0,1,.432-1.777,3.188,3.188,0,0,1,1.2-1.267l-.309.151a3.112,3.112,0,0,1,1.4-.712,6.939,6.939,0,0,1,1.4-.151h7.691a3.327,3.327,0,0,1,2.7,1.216,4.613,4.613,0,0,1,.734,1.273c.187.475.367.964.54,1.475L16.858,45.9a12.271,12.271,0,0,1,2.475-3.252,18.913,18.913,0,0,1,4.223-3.043,26.632,26.632,0,0,1,5.835-2.267,28.622,28.622,0,0,1,7.389-.885,22.438,22.438,0,0,1,14.577,4.879c4.26-3.742,8.792-4.864,10.634-4.879,4.317-.021,7.015-.021,7.346-.021l7.951.007V7.361c0-3.971,4.54-7.4,8.518-7.36l1.821.022c3.986.035,9.209,3.316,9.108,7.3-.179,7.217-.258,18.167-.287,29.125l13.094.007c4.476,0,7.879,3.684,7.879,8.785,0,4.461-2.18,9.26-6.67,9.325-6.324.079-10.512.1-14.318.086,0,4.109.008,7.836.008,10.915,0,21.369,2.554,18.376,10.619,18.376l15.412-.123c6.079.036,7.094,5.548,7.108,8.418.036,5.756-1.655,9.836-7.022,9.915"
+              ></path>
+            </g>
+          </svg>
         </a>
       </div>
-
-      <!-- Mobile toggle -->
-      <div class="md:hidden">
-        <button @click="drawer">
-          F
+      <div class="block lg:hidden pr-4">
+        <button
+          id="nav-toggle"
+          class="
+            flex
+            items-center
+            p-1
+            text-pink-800
+            hover:text-gray-900
+            focus:outline-none focus:shadow-outline
+            transform
+            transition
+            hover:scale-105
+            duration-300
+            ease-in-out
+          "
+        >
           <svg
-            class="h-8 w-8 fill-current text-black"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+            class="fill-current h-6 w-6"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M4 6h16M4 12h16M4 18h16"></path>
+            <title>Menu</title>
+            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
           </svg>
         </button>
       </div>
-
-      <!-- Navbar -->
-      <div class="hidden md:block">
-        <ul class="flex space-x-8 text-sm font-sans">
-          <li>
-            <a href="#" class="active border-b-2 border-blue-500 pb-1">Home</a>
-          </li>
-          <li><a href="#" class="">Services</a></li>
-          <li><a href="#" class="">Features</a></li>
-          <li><a href="#" class="">FAQ</a></li>
-          <li><a href="#" class="">Contact</a></li>
-          <li>
-            <a
-              href="#"
-              class="
-                cta
-                bg-blue-500
-                hover:bg-blue-600
-                px-3
-                py-2
-                rounded
-                text-white
-                font-semibold
-              "
-              >Sign Up</a
-            >
-          </li>
-        </ul>
-      </div>
-
-      <!-- Dark Background Transition -->
-      <transition
-        enter-class="opacity-0"
-        enter-active-class="ease-out transition-medium"
-        enter-to-class="opacity-100"
-        leave-class="opacity-100"
-        leave-active-class="ease-out transition-medium"
-        leave-to-class="opacity-0"
-      >
-        <div
-          v-show="isOpen"
-          class="z-10 fixed inset-0 transition-opacity"
-          @keydown.esc="isOpen = false"
-        >
-          <div
-            class="absolute inset-0 bg-black opacity-50"
-            tabindex="0"
-            @click="isOpen = false"
-          ></div>
-        </div>
-      </transition>
-
-      <!-- Drawer Menu -->
-      <aside
+      <div
+        id="nav-content"
         class="
-          p-5
-          transform
-          top-0
-          left-0
-          w-64
+          w-full
+          flex-grow
+          lg:flex lg:items-center lg:w-auto
+          hidden
+          mt-2
+          lg:mt-0
           bg-white
-          fixed
-          h-full
-          overflow-auto
-          ease-in-out
-          transition-all
-          duration-300
-          z-30
+          lg:bg-transparent
+          text-black
+          p-4
+          lg:p-0
+          z-20
         "
-        :class="isOpen ? 'translate-x-0' : '-translate-x-full'"
       >
-        <div class="close">
-          <button
-            class="absolute top-0 right-0 mt-4 mr-4"
-            @click="isOpen = false"
-          >
-            <svg
-              class="w-6 h-6"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
-        </div>
-
-        <span
-          class="flex w-full items-center p-4 border-b"
-          @click="isOpen = false"
-        >
-          <LogoTailwind></LogoTailwind>
-        </span>
-
-        <ul class="divide-y font-sans">
-          <li>
-            <a href="#" class="my-4 inline-block" @click="isOpen = false"
-              >Home</a
+        <ul class="menu list-reset lg:flex justify-end flex-1 items-center">
+          <li class="mr-3">
+            <a class="inline-block py-2 px-4 font-bold no-underline" href="#"
+              >Tienda</a
             >
           </li>
-          <li>
-            <a href="#" class="my-4 inline-block" @click="isOpen = false"
-              >Services</a
-            >
-          </li>
-          <li>
-            <a href="#" class="my-4 inline-block" @click="isOpen = false"
-              >Features</a
-            >
-          </li>
-          <li>
-            <a href="#" class="my-4 inline-block" @click="isOpen = false"
-              >FAQ</a
-            >
-          </li>
-          <li>
-            <a href="#" class="my-4 inline-block" @click="isOpen = false"
-              >Contact</a
-            >
-          </li>
-          <li>
+          <li class="mr-3">
             <a
-              href="#"
               class="
-                my-8
-                w-full
-                text-center
-                font-semibold
-                cta
                 inline-block
-                bg-blue-500
-                hover:bg-blue-600
-                px-3
+                no-underline
+                hover:text-gray-800 hover:text-underline
                 py-2
-                rounded
-                text-white
+                px-4
               "
-              @click="isOpen = false"
-              >Sign Up</a
+              href="#"
+              >link</a
+            >
+          </li>
+          <li class="mr-3">
+            <a
+              class="
+                inline-block
+                no-underline
+                hover:text-gray-800 hover:text-underline
+                py-2
+                px-4
+              "
+              href="#"
+              >link</a
             >
           </li>
         </ul>
-
-        <div class="follow">
-          <p class="italic font-sans text-sm">follow us:</p>
-          <div class="social flex space-x-5 mt-4">
-            <a href="#">
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                data-prefix="fab"
-                data-icon="twitter"
-                class="h-5 w-5 fill-current text-gray-600"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"
-                ></path>
-              </svg>
-            </a>
-            <a href="#">
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                data-prefix="fab"
-                data-icon="facebook-f"
-                class="h-5 w-5 fill-current text-gray-600"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 320 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"
-                ></path>
-              </svg>
-            </a>
-            <a href="#">
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                data-prefix="fab"
-                data-icon="instagram"
-                class="h-5 w-5 fill-current text-gray-600"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 448 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"
-                ></path>
-              </svg>
-            </a>
-            <a href="#">
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                data-prefix="fab"
-                data-icon="youtube"
-                class="h-5 w-5 fill-current text-gray-600"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 576 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"
-                ></path>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </aside>
+        <button
+          id="navAction"
+          class="
+            mx-auto
+            lg:mx-0
+            hover:underline
+            bg-white
+            text-gray-800
+            font-bold
+            rounded-full
+            lg:mt-0
+            py-2
+            px-8
+            shadow
+            opacity-75
+            focus:outline-none focus:shadow-outline
+            transform
+            transition
+            hover:scale-105
+            duration-300
+            ease-in-out
+          "
+        >
+          ingresar
+        </button>
+      </div>
     </div>
+    <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
   </nav>
 </template>
 
@@ -254,22 +176,41 @@ export default {
   data() {
     return {
       isOpen: false,
+      isScrolled: false,
     }
   },
-  watch: {
-    isOpen: {
-      immediate: true,
-      handler(isOpen) {
-        if (process.client) {
-          if (isOpen) document.body.style.setProperty('overflow', 'hidden')
-          else document.body.style.removeProperty('overflow')
-        }
-      },
-    },
-  },
+
   mounted() {
-    document.addEventListener('keydown', (e) => {
-      if (e.keyCode === 27 && this.isOpen) this.isOpen = false
+    let scrollposNav = window.scrollY
+    const header = document.getElementById('header')
+    const navcontent = document.getElementById('nav-content')
+    const navaction = document.getElementById('navAction')
+    // const brandname = document.getElementById('brandname')
+    const toToggle = document.querySelectorAll('.toggleColour')
+
+    document.addEventListener('scroll', function () {
+      scrollposNav = window.scrollY
+      this.isScrolled = scrollposNav > 10
+      if (scrollposNav > 10) {
+        header.classList.add('scrolled')
+        navaction.classList.add('gradient')
+
+        for (let i = 0; i < toToggle.length; i++) {
+          toToggle[i].classList.add('text-gray-800')
+          toToggle[i].classList.remove('text-white')
+        }
+      } else {
+        header.classList.remove('scrolled')
+        navaction.classList.remove('gradient')
+
+        for (let i = 0; i < toToggle.length; i++) {
+          toToggle[i].classList.add('text-white')
+          toToggle[i].classList.remove('text-gray-800')
+        }
+
+        navcontent.classList.remove('bg-white')
+        navcontent.classList.add('bg-gray-100')
+      }
     })
   },
   methods: {
@@ -279,3 +220,38 @@ export default {
   },
 }
 </script>
+<style lang="postcss" scoped>
+#header {
+  @apply transition-all;
+  svg {
+    .path {
+      fill: #fff;
+      @apply transition-all;
+    }
+  }
+  .menu {
+    a {
+      @apply text-white transition-all;
+    }
+  }
+  #navAction {
+    @apply transition-all;
+  }
+  &.scrolled {
+    @apply bg-white shadow-xl;
+    svg {
+      .path {
+        fill: #ff6700;
+      }
+    }
+    .menu {
+      a {
+        @apply text-orange-500;
+      }
+    }
+    #navAction {
+      @apply text-white;
+    }
+  }
+}
+</style>

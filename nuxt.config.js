@@ -13,6 +13,9 @@ module.exports = {
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    bodyAttrs: {
+      class: 'leading-normal tracking-normal text-white gradient',
+    },
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
