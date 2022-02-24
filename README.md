@@ -69,4 +69,22 @@ More information about the usage of this directory in [the documentation](https:
 
 ### 'Firebase'
 
+Cuenta firebase login:use
+firebase login:use juanma.osoc@gmail.com
+
+Emulators
+firebase emulators:start
+firebase emulators:start --import=exports --export-on-exit=exports
+
+Publicar
 firebase deploy
+
+Parar emulador
+lsof -t -i:8080 -i:9000 -i:9099 -i:9199 -i:9090 -i:8085 -i:4000 | xargs kill -9
+
+Exportar emulador firebase emulators:export exports
+
+https://console.firebase.google.com/u/1/project/mitag-b1e8a/overview?hl=es-419
+
+https://us-central1-mitag-b1e8a.cloudfunctions.net/
+http://localhost:5001/mitag-b1e8a/us-central1/

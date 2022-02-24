@@ -1,35 +1,8 @@
 <template>
-  <nav
-    id="header"
-    class="fixed w-full z-30 top-0"
-    :class="isScrolled ? 'scrolled bg-white' : ''"
-  >
-    <div
-      class="
-        w-full
-        container
-        mx-auto
-        flex flex-wrap
-        items-center
-        justify-between
-        mt-0
-        py-2
-      "
-    >
-      <div class="pl-4 flex items-center">
-        <a
-          class="
-            toggleColour
-            text-white
-            no-underline
-            hover:no-underline
-            font-bold
-            text-2xl
-            lg:text-4xl
-          "
-          href="#"
-        >
-          <!--Icon from: http://www.potlabicons.com/ -->
+  <nav id="header" :class="isScrolled ? 'scrolled bg-white' : ''">
+    <div class="header-container">
+      <div class="header-container-int">
+        <nuxt-link class="logo-link toggleColour" to="/">
           <svg
             class="h-12 fill-current inline"
             xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +13,6 @@
             <defs>
               <clipPath id="clip-path">
                 <rect
-                  id="Rectángulo_9"
                   data-name="Rectángulo 9"
                   width="129.581"
                   height="102.235"
@@ -48,7 +20,7 @@
                 ></rect>
               </clipPath>
             </defs>
-            <g id="Grupo_17" data-name="Grupo 17" clip-path="url(#clip-path)">
+            <g data-name="Grupo 17" clip-path="url(#clip-path)">
               <path
                 class="path"
                 data-name="Trazado 92"
@@ -61,118 +33,55 @@
               ></path>
             </g>
           </svg>
-        </a>
+        </nuxt-link>
       </div>
-      <div class="block lg:hidden pr-4">
-        <button
-          id="nav-toggle"
-          class="
-            flex
-            items-center
-            p-1
-            text-pink-800
-            hover:text-gray-900
-            focus:outline-none focus:shadow-outline
-            transform
-            transition
-            hover:scale-105
-            duration-300
-            ease-in-out
-          "
-        >
-          <svg
-            class="fill-current h-6 w-6"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+      <div class="toogle-menu">
+        <button id="nav-toggle">
+          <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <title>Menu</title>
             <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
           </svg>
         </button>
       </div>
-      <div
-        id="nav-content"
-        class="
-          w-full
-          flex-grow
-          lg:flex lg:items-center lg:w-auto
-          hidden
-          mt-2
-          lg:mt-0
-          bg-white
-          lg:bg-transparent
-          text-black
-          p-4
-          lg:p-0
-          z-20
-        "
-      >
-        <ul class="menu list-reset lg:flex justify-end flex-1 items-center">
+      <div id="nav-content" class="">
+        <ul class="menu">
           <li class="mr-3">
             <a class="inline-block py-2 px-4 font-bold no-underline" href="#"
               >Tienda</a
             >
           </li>
-          <li class="mr-3">
-            <a
-              class="
-                inline-block
-                no-underline
-                hover:text-gray-800 hover:text-underline
-                py-2
-                px-4
-              "
-              href="#"
-              >link</a
-            >
+          <li v-if="userData" class="mr-3">
+            <nuxt-link to="/perfil"> Mi perfil </nuxt-link>
           </li>
-          <li class="mr-3">
-            <a
-              class="
-                inline-block
-                no-underline
-                hover:text-gray-800 hover:text-underline
-                py-2
-                px-4
-              "
-              href="#"
-              >link</a
-            >
+          <li v-if="userData" class="mr-3">
+            <nuxt-link :to="`/tag/${userData.tag}`"> Ver Mi Tag </nuxt-link>
+          </li>
+          <li v-if="userData" class="mr-3">
+            <nuxt-link :to="`/tag/${userData.tag}/edit`">
+              Editar Mi Tag
+            </nuxt-link>
+          </li>
+          <li>
+            <button class="navAction" @click="verUsuario">
+              <template v-if="isLoggedIn">
+                Salir <i class="fal fa-sign-out-alt"></i>
+              </template>
+              <template v-else>
+                Ingresar <i class="fas fa-sign-in-alt"></i>
+              </template>
+            </button>
           </li>
         </ul>
-        <button
-          id="navAction"
-          class="
-            mx-auto
-            lg:mx-0
-            hover:underline
-            bg-white
-            text-gray-800
-            font-bold
-            rounded-full
-            lg:mt-0
-            py-2
-            px-8
-            shadow
-            opacity-75
-            focus:outline-none focus:shadow-outline
-            transform
-            transition
-            hover:scale-105
-            duration-300
-            ease-in-out
-          "
-        >
-          ingresar
-        </button>
       </div>
     </div>
-    <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
+    <hr />
   </nav>
 </template>
 
 <script>
+import dataMixin from '~/mixins/data.js'
 export default {
+  mixins: [dataMixin],
   data() {
     return {
       isOpen: false,
@@ -182,34 +91,15 @@ export default {
 
   mounted() {
     let scrollposNav = window.scrollY
-    const header = document.getElementById('header')
-    const navcontent = document.getElementById('nav-content')
-    const navaction = document.getElementById('navAction')
-    // const brandname = document.getElementById('brandname')
-    const toToggle = document.querySelectorAll('.toggleColour')
 
     document.addEventListener('scroll', function () {
+      const header = document.getElementById('header')
       scrollposNav = window.scrollY
       this.isScrolled = scrollposNav > 10
       if (scrollposNav > 10) {
         header.classList.add('scrolled')
-        navaction.classList.add('gradient')
-
-        for (let i = 0; i < toToggle.length; i++) {
-          toToggle[i].classList.add('text-gray-800')
-          toToggle[i].classList.remove('text-white')
-        }
       } else {
         header.classList.remove('scrolled')
-        navaction.classList.remove('gradient')
-
-        for (let i = 0; i < toToggle.length; i++) {
-          toToggle[i].classList.add('text-white')
-          toToggle[i].classList.remove('text-gray-800')
-        }
-
-        navcontent.classList.remove('bg-white')
-        navcontent.classList.add('bg-gray-100')
       }
     })
   },
@@ -217,40 +107,85 @@ export default {
     drawer() {
       this.isOpen = !this.isOpen
     },
+    verUsuario() {
+      if (this.isLoggedIn) {
+        this.logout()
+      } else {
+        this.$router.push({
+          path: '/login',
+        })
+      }
+    },
   },
 }
 </script>
 <style lang="postcss" scoped>
 #header {
-  @apply transition-all;
-  svg {
-    .path {
-      fill: #fff;
-      @apply transition-all;
+  @apply transition-all fixed w-full z-30 top-0;
+  .header-container {
+    @apply w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2;
+    &-int {
+      @apply pl-4 flex items-center;
+      .logo-link {
+        @apply text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl;
+        svg {
+          @apply h-16 transition hover:scale-105 duration-300 ease-in-out;
+          .path {
+            fill: #fff;
+            @apply transition-all;
+          }
+        }
+      }
     }
-  }
-  .menu {
-    a {
-      @apply text-white transition-all;
+    .toogle-menu {
+      @apply block lg:hidden pr-4;
+      #nav-toggle {
+        @apply flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none transition hover:scale-105 duration-300 ease-in-out;
+        svg {
+          @apply fill-current h-6 w-6;
+        }
+      }
     }
-  }
-  #navAction {
-    @apply transition-all;
+    #nav-content {
+      @apply w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20;
+      ul.menu {
+        @apply lg:flex justify-end flex-1 items-center;
+        li {
+          @apply mr-3;
+          a {
+            @apply text-white transition-all inline-block no-underline hover:text-gray-800  py-2 px-4;
+          }
+          .navAction {
+            @apply mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-2 px-8 shadow opacity-75 focus:outline-none transform transition hover:scale-105 duration-300 ease-in-out;
+          }
+        }
+      }
+    }
+
+    hr {
+      @apply border-b border-gray-100 opacity-25 my-0 py-0;
+    }
   }
   &.scrolled {
     @apply bg-white shadow-xl;
-    svg {
-      .path {
-        fill: #ff6700;
+    .logo-link {
+      svg {
+        .path {
+          fill: #ff6700;
+        }
       }
     }
-    .menu {
-      a {
-        @apply text-orange-500;
+    #nav-content {
+      ul.menu {
+        li {
+          a {
+            @apply text-orange-500;
+          }
+          .navAction {
+            @apply bg-orange-500  text-white;
+          }
+        }
       }
-    }
-    #navAction {
-      @apply text-white;
     }
   }
 }

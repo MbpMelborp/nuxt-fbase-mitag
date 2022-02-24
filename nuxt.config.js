@@ -1,10 +1,12 @@
 // eslint-disable-next-line nuxt/no-cjs-in-config
 module.exports = {
+  target: 'sever',
+  ssr: false,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'nuxt-fbase-mitag',
+    title: 'MiTag',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'es',
     },
     meta: [
       { charset: 'utf-8' },
@@ -16,13 +18,34 @@ module.exports = {
     bodyAttrs: {
       class: 'leading-normal tracking-normal text-white gradient',
     },
+    script: [
+      {
+        src: 'https://kit.fontawesome.com/3c4bd3a972.js',
+        crossorigin: 'anonymous',
+      },
+      {
+        hid: 'maps-googleapis',
+        src: `https://maps.googleapis.com/maps/api/js?libraries=places&key=${process.env.GMAP}`,
+        defer: true,
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['vuejs-noty/dist/vuejs-noty.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    '~/plugins/estructuras.client.js',
+    '~/plugins/validate.client.js',
+    '~/plugins/noty.client.js',
+    '~/plugins/vuetailwind.client.js',
+    '~/plugins/fb_errores.client.js',
+    '~/plugins/qr.client.js',
+    '~/plugins/phone.client.js',
+    '~/plugins/avatar.client.js',
+    '~/plugins/draggable.client.js',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -33,6 +56,8 @@ module.exports = {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/moment',
+    '@nuxtjs/dotenv',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -126,8 +151,8 @@ module.exports = {
   axios: {
     baseURL:
       process.env.NODE_ENV === 'production'
-        ? 'https://us-central1-plenitud-web-v2.cloudfunctions.net/webApi/api/v1'
-        : 'http://localhost:5001/plenitud-web-v2/us-central1/webApi/api/v1',
+        ? 'https://us-central1-mitag-b1e8a.cloudfunctions.net/'
+        : 'http://localhost:5001/mitag-b1e8a/us-central1/',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

@@ -7,9 +7,11 @@ import NuxtLoading from './components/nuxt-loading.vue'
 
 import '../node_modules/buefy/dist/buefy.css'
 
-import '../node_modules/@nuxtjs/tailwindcss/dist/runtime/tailwind.css'
+import '../assets/css/tailwind.css'
 
-import _6f6c098b from './layouts/default.vue'
+import '../node_modules/vuejs-noty/dist/vuejs-noty.css'
+
+import _6f6c098b from '../layouts/default.vue'
 
 const layouts = { "_default": sanitizeComponent(_6f6c098b) }
 

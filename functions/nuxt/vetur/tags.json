@@ -1,8 +1,35 @@
 {
+  "AppFooter": {
+    "description": "Auto imported from components/AppFooter.vue"
+  },
+  "AppHero": {
+    "description": "Auto imported from components/AppHero.vue"
+  },
+  "AppNav": {
+    "description": "Auto imported from components/AppNav.vue"
+  },
+  "FormLogin": {
+    "description": "Auto imported from components/FormLogin.vue"
+  },
+  "LogoTailwind": {
+    "description": "Auto imported from components/LogoTailwind.vue"
+  },
   "NuxtLogo": {
     "description": "Auto imported from components/NuxtLogo.vue"
   },
+  "TagFormPerfil": {
+    "description": "Auto imported from components/TagFormPerfil.vue"
+  },
+  "TagHero": {
+    "description": "Auto imported from components/TagHero.vue"
+  },
+  "Trama": {
+    "description": "Auto imported from components/Trama.vue"
+  },
   "Tutorial": {
     "description": "Auto imported from components/Tutorial.vue"
+  },
+  "UserTags": {
+    "description": "Auto imported from components/UserTags.vue"
   }
 }

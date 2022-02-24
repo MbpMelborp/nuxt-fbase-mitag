@@ -4,7 +4,12 @@ import { normalizeURL, decode } from 'ufo'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _1883636e = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
+const _850c5030 = () => interopDefault(import('../pages/login.vue' /* webpackChunkName: "pages/login" */))
+const _6a14de46 = () => interopDefault(import('../pages/perfil.vue' /* webpackChunkName: "pages/perfil" */))
+const _3097bbf2 = () => interopDefault(import('../pages/tag/_id/index.vue' /* webpackChunkName: "pages/tag/_id/index" */))
+const _0d29ba4c = () => interopDefault(import('../pages/tag/_id/create/index.vue' /* webpackChunkName: "pages/tag/_id/create/index" */))
+const _b001e9b0 = () => interopDefault(import('../pages/tag/_id/edit/index.vue' /* webpackChunkName: "pages/tag/_id/edit/index" */))
+const _185b965e = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
 
@@ -18,8 +23,28 @@ export const routerOptions = {
   scrollBehavior,
 
   routes: [{
+    path: "/login",
+    component: _850c5030,
+    name: "login"
+  }, {
+    path: "/perfil",
+    component: _6a14de46,
+    name: "perfil"
+  }, {
+    path: "/tag/:id",
+    component: _3097bbf2,
+    name: "tag-id"
+  }, {
+    path: "/tag/:id?/create",
+    component: _0d29ba4c,
+    name: "tag-id-create"
+  }, {
+    path: "/tag/:id?/edit",
+    component: _b001e9b0,
+    name: "tag-id-edit"
+  }, {
     path: "/",
-    component: _1883636e,
+    component: _185b965e,
     name: "index"
   }],
 

@@ -1,9 +1,44 @@
 [
   {
+    "name": "login",
+    "path": "/login",
+    "component": "/Volumes/JUANM@DISK/DEV/mitag/nuxt-fbase-mitag/pages/login.vue",
+    "chunkName": "pages/login",
+    "_name": "_850c5030"
+  },
+  {
+    "name": "perfil",
+    "path": "/perfil",
+    "component": "/Volumes/JUANM@DISK/DEV/mitag/nuxt-fbase-mitag/pages/perfil.vue",
+    "chunkName": "pages/perfil",
+    "_name": "_6a14de46"
+  },
+  {
+    "name": "tag-id",
+    "path": "/tag/:id",
+    "component": "/Volumes/JUANM@DISK/DEV/mitag/nuxt-fbase-mitag/pages/tag/_id/index.vue",
+    "chunkName": "pages/tag/_id/index",
+    "_name": "_3097bbf2"
+  },
+  {
+    "name": "tag-id-create",
+    "path": "/tag/:id?/create",
+    "component": "/Volumes/JUANM@DISK/DEV/mitag/nuxt-fbase-mitag/pages/tag/_id/create/index.vue",
+    "chunkName": "pages/tag/_id/create/index",
+    "_name": "_0d29ba4c"
+  },
+  {
+    "name": "tag-id-edit",
+    "path": "/tag/:id?/edit",
+    "component": "/Volumes/JUANM@DISK/DEV/mitag/nuxt-fbase-mitag/pages/tag/_id/edit/index.vue",
+    "chunkName": "pages/tag/_id/edit/index",
+    "_name": "_b001e9b0"
+  },
+  {
     "name": "index",
     "path": "/",
-    "component": "/Users/juanosoriocano/Documents/mtag/nuxt-fbase-mitag/pages/index.vue",
+    "component": "/Volumes/JUANM@DISK/DEV/mitag/nuxt-fbase-mitag/pages/index.vue",
     "chunkName": "pages/index",
-    "_name": "_1883636e"
+    "_name": "_185b965e"
   }
 ]

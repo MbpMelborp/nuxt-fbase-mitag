@@ -13,4 +13,11 @@ export default {
       return false
     }
   },
+  isLoaded(state) {
+    try {
+      return state.authUser !== null && state.userData !== null
+    } catch {
+      return false
+    }
+  },
 }

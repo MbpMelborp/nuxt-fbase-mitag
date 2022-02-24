@@ -8,6 +8,7 @@ module.exports = {
     './nuxt.config.{js,ts}',
   ],
   darkMode: false, // or 'media' or 'class'
+  plugins: [require('@tailwindcss/aspect-ratio')],
   theme: {
     fontFamily: {
       sans: ['Raleway', 'sans-serif !important'],
@@ -16,6 +17,9 @@ module.exports = {
     extend: {
       fontSize: {
         '2xs': '.65rem',
+      },
+      borderWidth: {
+        12: '12px',
       },
       colors: {
         indigo: {

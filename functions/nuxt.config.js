@@ -2,9 +2,9 @@
 module.exports = {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'nuxt-fbase-mitag',
+    title: 'MiTag',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'es',
     },
     meta: [
       { charset: 'utf-8' },
@@ -13,13 +13,35 @@ module.exports = {
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    bodyAttrs: {
+      class: 'leading-normal tracking-normal text-white gradient',
+    },
+    script: [
+      {
+        src: 'https://kit.fontawesome.com/3c4bd3a972.js',
+        crossorigin: 'anonymous',
+      },
+      {
+        hid: 'maps-googleapis',
+        src: `https://maps.googleapis.com/maps/api/js?libraries=places&key=${process.env.GMAP}`,
+        defer: true,
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['vuejs-noty/dist/vuejs-noty.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    '~/plugins/estructuras.client.js',
+    '~/plugins/validate.client.js',
+    '~/plugins/noty.client.js',
+    '~/plugins/vuetailwind.client.js',
+    '~/plugins/fb_errores.client.js',
+    '~/plugins/qr.client.js',
+    '~/plugins/phone.client.js',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -30,10 +52,13 @@ module.exports = {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/moment',
+    '@nuxtjs/dotenv',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/dotenv',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     'nuxt-buefy',
@@ -111,7 +136,13 @@ module.exports = {
       },
     ],
   ],
-
+  tailwindcss: {
+    cssPath: '~/assets/css/tailwind.css',
+    configPath: 'tailwind.config.js',
+    exposeConfig: false,
+    config: {},
+    injectPosition: 0,
+  },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseURL:
