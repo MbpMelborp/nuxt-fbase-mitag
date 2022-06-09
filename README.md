@@ -74,10 +74,11 @@ firebase login:use juanma.osoc@gmail.com
 
 Emulators
 firebase emulators:start
-firebase emulators:start --import=exports --export-on-exit=exports
+firebase emulators:start --import=exports --export-on-exit=./exports
 
 Publicar
 firebase deploy
+firebase deploy --only hosting
 
 Parar emulador
 lsof -t -i:8080 -i:9000 -i:9099 -i:9199 -i:9090 -i:8085 -i:4000 | xargs kill -9

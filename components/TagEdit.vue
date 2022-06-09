@@ -16,6 +16,64 @@
             {{ userData.primer_nombre }} {{ userData.segundo_nombre }}
             {{ userData.apellidos }}
           </h3>
+          <div class="nav-perfil-theme">
+            <input
+              v-model="theme"
+              value="default"
+              type="radio"
+              name="theme"
+              class="default"
+              :checked="theme === 'default'"
+            />
+            <input
+              v-model="theme"
+              value="green"
+              type="radio"
+              name="theme"
+              class="green"
+              :checked="theme === 'green'"
+            />
+            <input
+              v-model="theme"
+              value="blue"
+              type="radio"
+              name="theme"
+              class="blue"
+              :checked="theme === 'blue'"
+            />
+            <input
+              v-model="theme"
+              value="red"
+              type="radio"
+              name="theme"
+              class="red"
+              :checked="theme === 'red'"
+            />
+            <input
+              v-model="theme"
+              value="yellow"
+              type="radio"
+              name="theme"
+              class="yellow"
+              :checked="theme === 'yellow'"
+            />
+            <input
+              v-model="theme"
+              value="light"
+              type="radio"
+              name="theme"
+              class="light"
+              :checked="theme === 'light'"
+            />
+            <input
+              v-model="theme"
+              value="dark"
+              type="radio"
+              name="theme"
+              class="dark"
+              :checked="theme === 'dark'"
+            />
+          </div>
         </div>
 
         <ul>
@@ -135,22 +193,53 @@
       </template>
     </t-modal>
 
-    <t-modal v-model="aIcon" header="Agregar Icono">
-      Content of the modal.
+    <t-modal v-model="aIcon" class="v-modal" header="Agregar icono">
+      <TagItemIcoForm ref="aIcon" @closeaModal="aIcon = false"></TagItemIcoForm>
       <template #footer>
-        <div class="flex justify-between">
-          <button type="button" @click="aIcon = false">Cancelar</button>
-          <button type="button">Agregar</button>
+        <div class="v-footer flex justify-between">
+          <button class="v-cancel" type="button" @click="aIcon = false">
+            <i class="fas fa-times-circle"></i>
+            <span>Cancelar </span>
+          </button>
+          <button class="v-ok" type="button" @click="enviarIco">
+            <span>Agregar</span>
+            <i class="fas fa-check-circle"></i>
+          </button>
         </div>
       </template>
     </t-modal>
 
-    <t-modal v-model="aMedia" header="Agregar Multimedia">
-      Content of the modal.
+    <t-modal v-model="aDir" class="v-modal" header="Agregar dirección">
+      <TagItemDirForm ref="aDir" @closeaModal="aDir = false"></TagItemDirForm>
       <template #footer>
-        <div class="flex justify-between">
-          <button type="button" @click="aMedia = false">Cancelar</button>
-          <button type="button">Agregar</button>
+        <div class="v-footer flex justify-between">
+          <button class="v-cancel" type="button" @click="aDir = false">
+            <i class="fas fa-times-circle"></i>
+            <span>Cancelar </span>
+          </button>
+          <button class="v-ok" type="button" @click="enviarDir">
+            <span>Agregar</span>
+            <i class="fas fa-check-circle"></i>
+          </button>
+        </div>
+      </template>
+    </t-modal>
+
+    <t-modal v-model="aMedia" class="v-modal" header="Agregar Media">
+      <TagItemMediaForm
+        ref="aMedia"
+        @closeaModal="aMedia = false"
+      ></TagItemMediaForm>
+      <template #footer>
+        <div class="v-footer flex justify-between">
+          <button class="v-cancel" type="button" @click="aMedia = false">
+            <i class="fas fa-times-circle"></i>
+            <span>Cancelar </span>
+          </button>
+          <button class="v-ok" type="button" @click="enviarMedia">
+            <span>Agregar</span>
+            <i class="fas fa-check-circle"></i>
+          </button>
         </div>
       </template>
     </t-modal>
@@ -164,6 +253,47 @@
               <TagItemEmailView
                 :info="userData.info.emails[0]"
               ></TagItemEmailView>
+            </div>
+          </div>
+          <div class="otros_enlaces">
+            <hr />
+            <h3>Iconos</h3>
+            <Draggable
+              v-if="iconos.length > 0"
+              v-model="iconos"
+              class="drag"
+              draggable=".item"
+              handle=".handle"
+              gosth=".ghost"
+              v-bind="dragOptions"
+              @change="log"
+              @start="isDragging = true"
+              @end="isDragging = false"
+            >
+              <transition-group type="transition" name="flip-list">
+                <div
+                  v-for="(item, w) in iconos"
+                  :key="'iconos_' + w"
+                  class="item"
+                >
+                  <span class="handle">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </span>
+                  <TagItemIcoView :info="item"></TagItemIcoView>
+                </div>
+              </transition-group>
+            </Draggable>
+            <div v-else>
+              <p class="text-center text-lg py-10">
+                Puedes ingresar iconos
+
+                <button
+                  class="text-xl underline text-primary-500"
+                  @click="aIcon = true"
+                >
+                  aquí
+                </button>
+              </p>
             </div>
           </div>
           <div class="otros_enlaces">
@@ -205,19 +335,19 @@
               <p class="text-center text-lg py-10">
                 Puedes agregar
                 <!-- <button
-                  class="text-xl underline text-orange-500"
+                  class="text-xl underline text-primary-500"
                   @click="aMed = true"
                 >
                   notas</button
                 >, -->
                 <button
-                  class="text-xl underline text-orange-500"
+                  class="text-xl underline text-primary-500"
                   @click="aNot = true"
                 >
                   notas</button
                 >,
                 <button
-                  class="text-xl underline text-orange-500"
+                  class="text-xl underline text-primary-500"
                   @click="aLink = true"
                 >
                   links
@@ -259,8 +389,91 @@
               <p class="text-center text-lg py-10">
                 Puedes ingresar teléfonos
                 <button
-                  class="text-xl underline text-orange-500"
+                  class="text-xl underline text-primary-500"
                   @click="aTel = true"
+                >
+                  aquí
+                </button>
+              </p>
+            </div>
+          </div>
+
+          <div class="otros_enlaces">
+            <hr />
+            <h3>Direcciones</h3>
+
+            <Draggable
+              v-if="direcciones.length > 0"
+              v-model="direcciones"
+              class="drag"
+              draggable=".item"
+              handle=".handle"
+              gosth=".ghost"
+              v-bind="dragOptions"
+              @change="log"
+              @start="isDragging = true"
+              @end="isDragging = false"
+            >
+              <transition-group type="transition" name="flip-list">
+                <div
+                  v-for="(item, y) in direcciones"
+                  :key="'direcciones_' + y"
+                  class="item"
+                >
+                  <span class="handle">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </span>
+                  <TagItemDirView :info="item"></TagItemDirView>
+                </div>
+              </transition-group>
+            </Draggable>
+            <div v-else>
+              <p class="text-center text-lg py-10">
+                Puedes ingresar direcciones
+                <button
+                  class="text-xl underline text-primary-500"
+                  @click="aDir = true"
+                >
+                  aquí
+                </button>
+              </p>
+            </div>
+          </div>
+          <div class="otros_enlaces">
+            <hr />
+            <h3>Media</h3>
+
+            <Draggable
+              v-if="medias.length > 0"
+              v-model="medias"
+              class="drag"
+              draggable=".item"
+              handle=".handle"
+              gosth=".ghost"
+              v-bind="dragOptions"
+              @change="changeMedia"
+              @start="isDragging = true"
+              @end="isDragging = false"
+            >
+              <transition-group type="transition" name="flip-list">
+                <div
+                  v-for="(item, y) in medias"
+                  :key="'media_' + y"
+                  class="item"
+                >
+                  <span class="handle">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </span>
+                  <TagItemMediaView :info="item"></TagItemMediaView>
+                </div>
+              </transition-group>
+            </Draggable>
+            <div v-else>
+              <p class="text-center text-lg py-10">
+                Puedes ingresar multimedia
+                <button
+                  class="text-xl underline text-primary-500"
+                  @click="aMedia = true"
                 >
                   aquí
                 </button>
@@ -295,6 +508,7 @@ export default {
       ],
     }
   },
+
   computed: {
     dragOptions() {
       return {
@@ -306,21 +520,20 @@ export default {
     },
   },
   mounted() {
-    this.$fire.functions
-      .httpsCallable('getTag')({
-        id: 'mHRi9',
-      })
-      .then((resp) => {
-        console.log('ID FROM TAG ', resp)
-      })
-
-    this.$fire.functions
-      .httpsCallable('getTag')({
-        id: 'mHRi9',
-      })
-      .then((resp) => {
-        console.log('ID FROM TAG ', resp)
-      })
+    // this.$fire.functions
+    //   .httpsCallable('getTag')({
+    //     id: 'mHRi9',
+    //   })
+    //   .then((resp) => {
+    //     console.log('ID FROM TAG ', resp)
+    //   })
+    // this.$fire.functions
+    //   .httpsCallable('getTag')({
+    //     id: 'mHRi9',
+    //   })
+    //   .then((resp) => {
+    //     console.log('ID FROM TAG ', resp)
+    //   })
   },
   methods: {
     addPeople() {
@@ -333,6 +546,15 @@ export default {
     log() {
       console.log('LOG', this.myArray)
     },
+    changeMedia() {
+      if (window.instgrm) {
+        window.instgrm.Embeds.process()
+      }
+
+      if (window.twttr) {
+        window.twttr.widgets.load()
+      }
+    },
 
     closeaLink() {
       this.aLink = false
@@ -343,18 +565,18 @@ export default {
 
 <style lang="postcss">
 .p-edit {
-  @apply pt-4 text-orange-700 w-full;
+  @apply pt-4 text-primary-700 w-full;
   .perfil-wrap {
-    @apply w-full px-4 mx-auto;
+    @apply w-full lg:px-4 px-1 mx-auto;
     .perfil-wrap-int {
-      @apply relative flex flex-col min-w-0 break-words bg-white w-full shadow-xl rounded-lg -mt-4 pt-8 mb-8 z-10;
+      @apply relative flex flex-col min-w-0 break-words bg-light w-full shadow-xl rounded-lg -mt-4 pt-8 mb-8 z-10;
       .perfil-wrap-int-top {
         @apply hidden flex flex-wrap justify-center;
         .perfil-wrap-int-top-foto {
           @apply w-full px-4 flex justify-center;
           .foto-perfil {
             max-width: 120px;
-            @apply shadow-xl border-solid border-white border-4 rounded-full h-auto align-middle -mt-16 mx-auto object-cover bg-gradient-to-r from-orange-400  to-yellow-500;
+            @apply shadow-xl border-solid border-light border-4 rounded-full h-auto align-middle -mt-16 mx-auto object-cover bg-gradient-to-r from-primary-400  to-third-500;
           }
         }
         .perfil-wrap-int-top-info1 {
@@ -367,7 +589,7 @@ export default {
                 @apply mx-auto text-2xl font-bold  uppercase tracking-wide h-20 w-20 flex items-center;
               }
               .desc {
-                @apply text-sm text-orange-400;
+                @apply text-sm text-primary-400;
               }
             }
           }
@@ -384,13 +606,13 @@ export default {
         .tag-link {
           @apply hidden text-sm leading-normal mt-0 mb-1 font-bold;
           i {
-            @apply mr-2 text-base text-red-400;
+            @apply mr-2 text-base text-secondary-400;
           }
         }
         .tag-empresa {
           @apply hidden text-sm leading-normal mt-0 mb-1 font-bold;
           i {
-            @apply mr-2 text-base text-red-400;
+            @apply mr-2 text-base text-secondary-400;
           }
         }
       }
@@ -414,27 +636,61 @@ export default {
   .nav-edit {
     @apply px-4;
     .nav-edit-wrap {
-      @apply justify-around py-4 bg-white bg-opacity-60 shadow-xl rounded-lg z-20;
+      @apply justify-around py-4 bg-light-200 shadow-xl rounded-lg z-20;
       .nav-perfil {
-        @apply border-b border-orange-200 pb-2 mb-4 px-6 flex space-x-4 items-center;
+        @apply border-b border-primary-200 pb-2 mb-4 px-6 flex flex-row space-x-4 items-center;
         img {
-          @apply w-12 shadow-xl border-solid border-white border-4 rounded-full h-auto object-cover bg-gradient-to-r from-orange-400  to-yellow-500;
+          @apply w-12 shadow-xl border-solid border-light border-4 rounded-full h-auto object-cover bg-gradient-to-r from-primary-400  to-primary-500;
         }
         h3 {
-          @apply text-2xl;
+          @apply text-2xl flex-1;
+        }
+        .nav-perfil-theme {
+          @apply flex space-x-2 items-center;
+          input {
+            @apply h-4 w-4 ring-1 ring-offset-1;
+            &.default {
+              accent-color: #ff5423;
+              @apply border-orange-300 bg-orange-200 ring-orange-500;
+            }
+            &.green {
+              accent-color: #00565d;
+              @apply border-green-300 bg-green-200 ring-green-500;
+            }
+            &.blue {
+              accent-color: #0c2291;
+              @apply border-blue-300 bg-blue-200 ring-blue-500;
+            }
+            &.red {
+              accent-color: #801212;
+              @apply border-red-300 bg-red-200 ring-red-500;
+            }
+            &.yellow {
+              accent-color: #ae8b16;
+              @apply border-yellow-300 bg-yellow-200 ring-yellow-500;
+            }
+            &.light {
+              accent-color: #c4c4c4;
+              @apply border-light-300 bg-light-200 ring-light-500;
+            }
+            &.dark {
+              accent-color: #484848;
+              @apply border-dark-300 bg-dark-200 ring-dark-500;
+            }
+          }
         }
       }
       ul {
-        @apply w-full grid  gap-x-3 gap-y-2 grid-cols-3 my-4 flex-wrap px-4;
+        @apply w-full grid gap-x-3 gap-y-2 lg:grid-cols-4 grid-cols-2 my-4 flex-wrap px-4;
         li {
           @apply text-sm font-bold w-full;
           button {
-            @apply w-full flex space-x-4 items-center justify-around rounded-lg px-4 py-1 bg-gradient-to-br from-orange-100 to-white shadow-lg;
+            @apply w-full flex space-x-4 items-center justify-around rounded-lg px-4 py-1 bg-gradient-to-br from-primary-100 to-primary-200 shadow-lg;
             i {
-              @apply text-center shadow-inner text-sm block rounded-full pt-1 w-8 h-8 bg-orange-400 text-white;
+              @apply h-8 w-8 text-center shadow-inner text-sm block rounded-full pt-1 bg-primary-400 text-light;
             }
             span {
-              @apply block leading-3 text-left;
+              @apply flex-1 block leading-3 text-left;
             }
           }
         }
@@ -447,10 +703,10 @@ export default {
     button {
       @apply flex space-x-4 items-center justify-around rounded-lg px-4 py-2 shadow-lg font-bold;
       &.v-cancel {
-        @apply text-red-500 bg-gradient-to-br from-red-100 to-white;
+        @apply text-secondary-500 bg-gradient-to-br from-secondary-100 to-light;
       }
       &.v-ok {
-        @apply text-green-500 bg-gradient-to-br from-green-100 to-white;
+        @apply text-green-500 bg-gradient-to-br from-green-100 to-light;
       }
       i {
         @apply text-center text-sm block;

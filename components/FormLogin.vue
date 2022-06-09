@@ -88,7 +88,7 @@ export default {
       isExist: false,
       habilitarBoton: true,
       form: {
-        email: process.env.NODE_ENV !== 'production' ? `test@melborp.co` : '',
+        email: process.env.NODE_ENV !== 'production' ? `test0.87@gmail.co` : '',
         password: process.env.NODE_ENV !== 'production' ? `Problem4321` : '',
         sesion: true,
       },
@@ -126,12 +126,12 @@ export default {
 <style lang="postcss">
 .form_wrap {
   .wrap_form_col {
-    @apply text-pink-800 border border-orange-100 bg-white rounded-xl p-8 transition-all text-left duration-500 mt-8 mb-24;
+    @apply text-primary-800 border border-primary-100 bg-light rounded-xl p-8 transition-all text-left duration-500 mt-8 mb-24;
     &:focus-within {
-      @apply shadow-lg bg-opacity-80;
+      @apply shadow-lg bg-light-200;
     }
     h3 {
-      @apply border-b border-yellow-400 pb-2;
+      @apply border-b border-third-400 pb-2;
     }
   }
 }

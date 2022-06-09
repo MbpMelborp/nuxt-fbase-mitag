@@ -16,7 +16,7 @@ module.exports = {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     bodyAttrs: {
-      class: 'leading-normal tracking-normal text-white gradient',
+      class: 'leading-normal tracking-normal text-light gradient theme-default',
     },
     script: [
       {
@@ -24,8 +24,14 @@ module.exports = {
         crossorigin: 'anonymous',
       },
       {
+        src: '//www.instagram.com/embed.js',
+      },
+      {
+        src: 'https://platform.twitter.com/widgets.js',
+      },
+      {
         hid: 'maps-googleapis',
-        src: `https://maps.googleapis.com/maps/api/js?libraries=places&key=${process.env.GMAP}`,
+        src: `https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBextg5ie_El0O6y5TlpIbbXQeVgLavKO4`,
         defer: true,
       },
     ],
@@ -45,6 +51,8 @@ module.exports = {
     '~/plugins/phone.client.js',
     '~/plugins/avatar.client.js',
     '~/plugins/draggable.client.js',
+    '~/plugins/maps.client.js',
+    // '~/plugins/video.client.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -139,6 +147,7 @@ module.exports = {
         },
       },
     ],
+    'vue-social-sharing/nuxt',
   ],
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',

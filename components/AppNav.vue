@@ -1,5 +1,5 @@
 <template>
-  <nav id="header" :class="isScrolled ? 'scrolled bg-white' : ''">
+  <nav id="header" :class="isScrolled ? 'scrolled bg-light' : ''">
     <div class="header-container">
       <div class="header-container-int">
         <nuxt-link class="logo-link toggleColour" to="/">
@@ -36,22 +36,71 @@
         </nuxt-link>
       </div>
       <div class="toogle-menu">
-        <button id="nav-toggle">
+        <t-dropdown text="Menú">
+          <div class="py-1 rounded-md shadow-xs">
+            <ul class="menu">
+              <li class="mr-3">
+                <a
+                  class="inline-block py-2 px-4 font-bold no-underline"
+                  href="https://mitag.co/"
+                  target="_blank"
+                  >Tienda</a
+                >
+              </li>
+              <li v-if="userData" class="mr-3">
+                <nuxt-link to="/perfil"> Mi perfil </nuxt-link>
+              </li>
+              <li v-if="userData" class="mr-3">
+                <nuxt-link to="/perfil/leads"> Leads </nuxt-link>
+              </li>
+              <li v-if="userData" class="mr-3">
+                <nuxt-link :to="`/tag/${userData.tag}`"> Ver Mi Tag </nuxt-link>
+              </li>
+              <li v-if="userData" class="mr-3">
+                <nuxt-link :to="`/tag/${userData.tag}/edit`">
+                  Editar Mi Tag
+                </nuxt-link>
+              </li>
+              <li>
+                <button class="navAction" @click="verUsuario">
+                  <template v-if="isLoggedIn">
+                    Salir <i class="fal fa-sign-out-alt"></i>
+                  </template>
+                  <template v-else>
+                    Ingresar <i class="fas fa-sign-in-alt"></i>
+                  </template>
+                </button>
+              </li>
+              <template v-if="userData">
+                <li v-if="userData.admin" class="mr-3">
+                  <nuxt-link :to="`/manager`"> Administrar </nuxt-link>
+                </li>
+              </template>
+            </ul>
+          </div>
+        </t-dropdown>
+        <!-- <button id="nav-toggle">
           <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <title>Menu</title>
             <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
           </svg>
-        </button>
+        </button> -->
       </div>
       <div id="nav-content" class="">
         <ul class="menu">
           <li class="mr-3">
-            <a class="inline-block py-2 px-4 font-bold no-underline" href="#"
+            <a
+              class="inline-block py-2 px-4 font-bold no-underline"
+              href="https://mitag.co/"
+              target="_blank"
               >Tienda</a
             >
           </li>
           <li v-if="userData" class="mr-3">
             <nuxt-link to="/perfil"> Mi perfil </nuxt-link>
+          </li>
+          <li v-if="userData" class="mr-3">
+            <nuxt-link to="/perfil/leads"> Leads </nuxt-link>
           </li>
           <li v-if="userData" class="mr-3">
             <nuxt-link :to="`/tag/${userData.tag}`"> Ver Mi Tag </nuxt-link>
@@ -71,6 +120,11 @@
               </template>
             </button>
           </li>
+          <template v-if="userData">
+            <li v-if="userData.admin" class="mr-3">
+              <nuxt-link :to="`/manager`"> Administrar </nuxt-link>
+            </li>
+          </template>
         </ul>
       </div>
     </div>
@@ -123,13 +177,13 @@ export default {
 #header {
   @apply transition-all fixed w-full z-30 top-0;
   .header-container {
-    @apply w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2;
+    @apply w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2  pl-2 lg:pl-0;
     &-int {
       @apply pl-4 flex items-center;
       .logo-link {
-        @apply text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl;
+        @apply text-light no-underline hover:no-underline font-bold text-2xl lg:text-4xl;
         svg {
-          @apply h-16 transition hover:scale-105 duration-300 ease-in-out;
+          @apply block h-16 transition hover:scale-105 duration-300 ease-in-out;
           .path {
             fill: #fff;
             @apply transition-all;
@@ -140,23 +194,28 @@ export default {
     .toogle-menu {
       @apply block lg:hidden pr-4;
       #nav-toggle {
-        @apply flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none transition hover:scale-105 duration-300 ease-in-out;
+        @apply flex items-center p-1 text-primary-800 hover:text-gray-900 focus:outline-none transition hover:scale-105 duration-300 ease-in-out;
         svg {
           @apply fill-current h-6 w-6;
         }
       }
+      ul {
+        a {
+          @apply block px-4 py-2 text-sm leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-gray-100 focus:outline-none focus:bg-gray-100;
+        }
+      }
     }
     #nav-content {
-      @apply w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20;
+      @apply w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-light lg:bg-transparent text-dark p-4 lg:p-0 z-20;
       ul.menu {
         @apply lg:flex justify-end flex-1 items-center;
         li {
           @apply mr-3;
           a {
-            @apply text-white transition-all inline-block no-underline hover:text-gray-800  py-2 px-4;
+            @apply text-light transition-all inline-block no-underline hover:text-gray-800  py-2 px-4;
           }
           .navAction {
-            @apply mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full lg:mt-0 py-2 px-8 shadow opacity-75 focus:outline-none transform transition hover:scale-105 duration-300 ease-in-out;
+            @apply mx-auto lg:mx-0 hover:underline bg-light text-gray-800 font-bold rounded-full lg:mt-0 py-2 px-8 shadow opacity-75 focus:outline-none transform transition hover:scale-105 duration-300 ease-in-out;
           }
         }
       }
@@ -167,11 +226,11 @@ export default {
     }
   }
   &.scrolled {
-    @apply bg-white shadow-xl;
+    @apply bg-light shadow-xl;
     .logo-link {
       svg {
         .path {
-          fill: #ff6700;
+          fill: var(--color-primary-500);
         }
       }
     }
@@ -179,10 +238,10 @@ export default {
       ul.menu {
         li {
           a {
-            @apply text-orange-500;
+            @apply text-primary-500;
           }
           .navAction {
-            @apply bg-orange-500  text-white;
+            @apply bg-primary-500  text-light;
           }
         }
       }

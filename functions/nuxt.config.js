@@ -1,5 +1,7 @@
 // eslint-disable-next-line nuxt/no-cjs-in-config
 module.exports = {
+  target: 'sever',
+  ssr: false,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'MiTag',
@@ -14,7 +16,7 @@ module.exports = {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     bodyAttrs: {
-      class: 'leading-normal tracking-normal text-white gradient',
+      class: 'leading-normal tracking-normal text-light gradient theme-default',
     },
     script: [
       {
@@ -22,8 +24,14 @@ module.exports = {
         crossorigin: 'anonymous',
       },
       {
+        src: '//www.instagram.com/embed.js',
+      },
+      {
+        src: 'https://platform.twitter.com/widgets.js',
+      },
+      {
         hid: 'maps-googleapis',
-        src: `https://maps.googleapis.com/maps/api/js?libraries=places&key=${process.env.GMAP}`,
+        src: `https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBextg5ie_El0O6y5TlpIbbXQeVgLavKO4`,
         defer: true,
       },
     ],
@@ -41,6 +49,10 @@ module.exports = {
     '~/plugins/fb_errores.client.js',
     '~/plugins/qr.client.js',
     '~/plugins/phone.client.js',
+    '~/plugins/avatar.client.js',
+    '~/plugins/draggable.client.js',
+    '~/plugins/maps.client.js',
+    // '~/plugins/video.client.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -135,6 +147,7 @@ module.exports = {
         },
       },
     ],
+    'vue-social-sharing/nuxt',
   ],
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
@@ -147,8 +160,8 @@ module.exports = {
   axios: {
     baseURL:
       process.env.NODE_ENV === 'production'
-        ? 'https://us-central1-plenitud-web-v2.cloudfunctions.net/webApi/api/v1'
-        : 'http://localhost:5001/plenitud-web-v2/us-central1/webApi/api/v1',
+        ? 'https://us-central1-mitag-b1e8a.cloudfunctions.net/'
+        : 'http://localhost:5001/mitag-b1e8a/us-central1/',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

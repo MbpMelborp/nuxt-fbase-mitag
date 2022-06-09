@@ -21,7 +21,40 @@ export default {
         this.actualizarTelefonos(value)
       },
     },
+    iconos: {
+      get() {
+        return this.userData.info.iconos
+      },
+      set(value) {
+        this.actualizarIco(value)
+      },
+    },
+    direcciones: {
+      get() {
+        return this.userData.info.direcciones
+      },
+      set(value) {
+        this.actualizarDir(value)
+      },
+    },
+    medias: {
+      get() {
+        return this.userData.info.medias
+      },
+      set(value) {
+        this.actualizarMedia(value)
+      },
+    },
+    theme: {
+      get() {
+        return this.userData.theme
+      },
+      set(value) {
+        this.actualizarTheme(value)
+      },
+    },
   },
+
   data() {
     return {
       opciones: [
@@ -43,6 +76,21 @@ export default {
           text: 'Otro',
         },
       ],
+      opcionesDir: [
+        // cellPhone, pagerPhone, homePhone, workPhone, homeFax, workFax, otherPhone
+        // {
+        //   value: 'cellPhone',
+        //   text: 'Celular',
+        // },
+        {
+          value: 'homeAddress',
+          text: 'Hogar',
+        },
+        {
+          value: 'workAddress',
+          text: 'Trabajo',
+        },
+      ],
     }
   },
   methods: {
@@ -62,9 +110,20 @@ export default {
       agregarNota: 'agregarNota',
       agregarEmail: 'agregarEmail',
       agregarTel: 'agregarTel',
+      agregarIco: 'agregarIco',
+      agregarDir: 'agregarDir',
+      agregarMedia: 'agregarMedia',
 
       actualizarVarios: 'actualizarVarios',
       actualizarTelefonos: 'actualizarTelefonos',
+      actualizarIco: 'actualizarIco',
+      actualizarDir: 'actualizarDir',
+      actualizarMedia: 'actualizarMedia',
+
+      actualizarTheme: 'actualizarTheme',
+      enviarLead: 'enviarLead',
+
+      getTagsList: 'getTagsList',
     }),
     NumbersOnly(evt) {
       evt = evt || window.event
@@ -107,6 +166,24 @@ export default {
     enviarTel() {
       const mod = this.$refs.aTel
       mod.enviar()
+    },
+    enviarIco() {
+      const mod = this.$refs.aIcon
+      mod.enviar()
+    },
+    enviarDir() {
+      const mod = this.$refs.aDir
+      mod.enviar()
+    },
+    enviarMedia() {
+      const mod = this.$refs.aMedia
+      mod.enviar()
+      if (window.instgrm) {
+        window.instgrm.Embeds.process()
+      }
+      if (window.twttr) {
+        window.twttr.widgets.load()
+      }
     },
   },
 }

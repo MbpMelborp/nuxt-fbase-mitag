@@ -8,9 +8,11 @@ export default function ({ $auth, store, redirect, route }) {
   )
   if (store.getters.userData)
     if (!store.getters.isLoggedIn) {
-      if (process.env.NODE_ENV !== 'production') redirect('/')
+      // if (process.env.NODE_ENV !== 'production') 
+      redirect('/')
     } else if (store.getters.userData.tag !== route.params.id) {
-      if (process.env.NODE_ENV !== 'production') redirect('/perfil')
+      // if (process.env.NODE_ENV !== 'production') 
+      redirect('/perfil')
     }
   // }
 }

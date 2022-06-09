@@ -20,5 +20,6 @@ module.exports = {
     'no-console': 'off',
     'no-restricted-imports': ['error'],
     'vue/multi-word-component-names': 0,
+    'vue/no-v-html': 0,
   },
 }

@@ -1,13 +1,21 @@
 <template>
-  <div class="item-wrapper">
+  <div
+    class="item-wrapper"
+    :class="(view ? ' view ' : '') + (lectura ? ' lectura ' : '')"
+  >
     <div class="item-wrapper-info t-link">
       <div class="item-tipo"><i class="fas fa-link"></i> {{ info.tipo }}</div>
       <div class="item-titulo">
         {{ info.titulo }}
       </div>
       <div class="item-link">
-        <a :href="info.url" target="_blank">
-          {{ info.url }}
+        <a :href="info.url" target="_blank" :class="view ? 'btn-link' : ''">
+          <template v-if="!view">
+            {{ info.url }}
+          </template>
+          <template v-else>
+            {{ info.titulo }}
+          </template>
         </a>
       </div>
       <div
@@ -29,7 +37,7 @@
       </button>
     </div>
 
-    <t-modal v-model="aLink" class="v-modal" header="Editar link">
+    <t-modal v-model="aLink" class="v-modal" header="Editar Nota">
       <TagItemLinkForm
         ref="aLink"
         :info="info"
@@ -61,6 +69,16 @@ export default {
     info: {
       type: Object,
       required: true,
+    },
+    view: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    lectura: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
   data() {
@@ -101,5 +119,21 @@ export default {
 <style lang="postcss" scoped>
 .p-form-control {
   @apply mb-1;
+}
+.view {
+  .item-link {
+    @apply text-center text-xl;
+  }
+  .item-tipo,
+  .item-titulo,
+  .item-habilitado,
+  .item-wrapper-acciones {
+    @apply hidden;
+  }
+  &.lectura {
+    .item-link {
+      @apply text-sm;
+    }
+  }
 }
 </style>

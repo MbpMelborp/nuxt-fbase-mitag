@@ -5,7 +5,10 @@ import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
 const _850c5030 = () => interopDefault(import('../pages/login.vue' /* webpackChunkName: "pages/login" */))
-const _6a14de46 = () => interopDefault(import('../pages/perfil.vue' /* webpackChunkName: "pages/perfil" */))
+const _81988422 = () => interopDefault(import('../pages/manager/index.vue' /* webpackChunkName: "pages/manager/index" */))
+const _3f173da0 = () => interopDefault(import('../pages/perfil/index.vue' /* webpackChunkName: "pages/perfil/index" */))
+const _3176b1ac = () => interopDefault(import('../pages/perfil/edit.vue' /* webpackChunkName: "pages/perfil/edit" */))
+const _97681236 = () => interopDefault(import('../pages/perfil/leads.vue' /* webpackChunkName: "pages/perfil/leads" */))
 const _3097bbf2 = () => interopDefault(import('../pages/tag/_id/index.vue' /* webpackChunkName: "pages/tag/_id/index" */))
 const _0d29ba4c = () => interopDefault(import('../pages/tag/_id/create/index.vue' /* webpackChunkName: "pages/tag/_id/create/index" */))
 const _b001e9b0 = () => interopDefault(import('../pages/tag/_id/edit/index.vue' /* webpackChunkName: "pages/tag/_id/edit/index" */))
@@ -27,9 +30,21 @@ export const routerOptions = {
     component: _850c5030,
     name: "login"
   }, {
+    path: "/manager",
+    component: _81988422,
+    name: "manager"
+  }, {
     path: "/perfil",
-    component: _6a14de46,
+    component: _3f173da0,
     name: "perfil"
+  }, {
+    path: "/perfil/edit",
+    component: _3176b1ac,
+    name: "perfil-edit"
+  }, {
+    path: "/perfil/leads",
+    component: _97681236,
+    name: "perfil-leads"
   }, {
     path: "/tag/:id",
     component: _3097bbf2,

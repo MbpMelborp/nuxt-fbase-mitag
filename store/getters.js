@@ -20,4 +20,16 @@ export default {
       return false
     }
   },
+  isAdmin(state) {
+    try {
+      if (state.userData.admin !== null) {
+        console.info('----❕ | ⛹  >  MIDDLEWARE auth', state.userData.admin)
+        return state.userData.admin
+      } else {
+        return false
+      }
+    } catch {
+      return false
+    }
+  },
 }

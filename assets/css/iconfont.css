@@ -1,0 +1,272 @@
+@font-face {
+  font-family: 'iconfont'; /* Project id 2723324 */
+  src: url(iconfont.woff2) format('woff2');
+}
+
+.iconfont {
+  font-family: 'iconfont' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-bigo1:before {
+  content: '\e66b';
+}
+
+.icon-Tellonym1:before {
+  content: '\e66c';
+}
+
+.icon-a-youtubemusic:before {
+  content: '\e656';
+}
+
+.icon-Roblox1:before {
+  content: '\e657';
+}
+
+.icon-Redbubble1:before {
+  content: '\e658';
+}
+
+.icon-lazada1:before {
+  content: '\e659';
+}
+
+.icon-kwai1:before {
+  content: '\e65a';
+}
+
+.icon-Fiverr1:before {
+  content: '\e65b';
+}
+
+.icon-ivoox1:before {
+  content: '\e65c';
+}
+
+.icon-amino1:before {
+  content: '\e65d';
+}
+
+.icon-tokopedia1:before {
+  content: '\e65e';
+}
+
+.icon-a-GooglePodcast1:before {
+  content: '\e65f';
+}
+
+.icon-beatstars1:before {
+  content: '\e660';
+}
+
+.icon-a-applemusic1:before {
+  content: '\e661';
+}
+
+.icon-brubank1:before {
+  content: '\e662';
+}
+
+.icon-Github1:before {
+  content: '\e663';
+}
+
+.icon-coinbase1:before {
+  content: '\e664';
+}
+
+.icon-onlyfans1:before {
+  content: '\e665';
+}
+
+.icon-nubank1:before {
+  content: '\e666';
+}
+
+.icon-a-MercadoLibre1:before {
+  content: '\e667';
+}
+
+.icon-Freelancer1:before {
+  content: '\e668';
+}
+
+.icon-AliExpress1:before {
+  content: '\e669';
+}
+
+.icon-wordpress1:before {
+  content: '\e66a';
+}
+
+.icon-onlyfans:before {
+  content: '\e641';
+}
+
+.icon-wordpress:before {
+  content: '\e635';
+}
+
+.icon-Roblox:before {
+  content: '\e636';
+}
+
+.icon-a-GooglePodcast:before {
+  content: '\e637';
+}
+
+.icon-lazada:before {
+  content: '\e638';
+}
+
+.icon-Github:before {
+  content: '\e639';
+}
+
+.icon-Redbubble:before {
+  content: '\e63a';
+}
+
+.icon-tokopedia:before {
+  content: '\e63b';
+}
+
+.icon-AliExpress:before {
+  content: '\e63c';
+}
+
+.icon-Fiverr:before {
+  content: '\e63d';
+}
+
+.icon-bigo:before {
+  content: '\e63e';
+}
+
+.icon-a-MercadoLibre:before {
+  content: '\e63f';
+}
+
+.icon-Tellonym:before {
+  content: '\e640';
+}
+
+.icon-ivoox:before {
+  content: '\e62c';
+}
+
+.icon-coinbase:before {
+  content: '\e62d';
+}
+
+.icon-Freelancer:before {
+  content: '\e62e';
+}
+
+.icon-beatstars:before {
+  content: '\e62f';
+}
+
+.icon-brubank:before {
+  content: '\e630';
+}
+
+.icon-amino:before {
+  content: '\e631';
+}
+
+.icon-a-applemusic:before {
+  content: '\e632';
+}
+
+.icon-nubank:before {
+  content: '\e633';
+}
+
+.icon-kwai:before {
+  content: '\e634';
+}
+
+.icon-VibePay:before {
+  content: '\e612';
+}
+
+.icon-Uber:before {
+  content: '\e613';
+}
+
+.icon-Zelle:before {
+  content: '\e614';
+}
+
+.icon-Letterboxd:before {
+  content: '\e615';
+}
+
+.icon-Gmazonmusic:before {
+  content: '\e616';
+}
+
+.icon-Buymeacoffee:before {
+  content: '\e60e';
+}
+
+.icon-Vinted:before {
+  content: '\e60f';
+}
+
+.icon-venmo:before {
+  content: '\e610';
+}
+
+.icon-Googlemaps:before {
+  content: '\e611';
+}
+
+.icon-star2:before {
+  content: '\e60d';
+}
+
+.icon-Fansly:before {
+  content: '\e60b';
+}
+
+.icon-Clubhouse:before {
+  content: '\e60a';
+}
+
+.icon-VSCO:before {
+  content: '\e609';
+}
+
+.icon-wattpad:before {
+  content: '\e608';
+}
+
+.icon-a-linkadd:before {
+  content: '\e607';
+}
+
+.icon-a-titleexample:before {
+  content: '\e606';
+}
+
+.icon-shopee:before {
+  content: '\e605';
+}
+
+.icon-yemianfenxiang:before {
+  content: '\e604';
+}
+
+.icon-edit:before {
+  content: '\e603';
+}
+
+.icon-OnlyFans_logo:before {
+  content: '\e602';
+}

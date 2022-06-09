@@ -36,6 +36,7 @@
                     @change="onChange"
                   />
                 </div>
+                <!-- <NiceAvatar></NiceAvatar> -->
                 <Navigation
                   v-if="edicion"
                   class="w-72 mx-auto mb-8"
@@ -50,14 +51,14 @@
                       items-center
                       px-4
                       py-4
-                      bg-orange-100
+                      bg-primary-100
                       rounded-md
                       shadow-md
                       tracking-wide
                       border border-blue
                       cursor-pointer
-                      hover:bg-orange-100
-                      text-orange-500
+                      hover:bg-primary-100
+                      text-primary-500
                       ease-linear
                       transition-all
                       duration-150
@@ -78,7 +79,7 @@
                   </label>
                   <p
                     v-if="nombre"
-                    class="text-center my-2 text-xs text-orange-200"
+                    class="text-center my-2 text-xs text-primary-200"
                   >
                     {{ nombre }}
                   </p>
@@ -314,6 +315,7 @@
                     v-model="phone"
                     name="celular"
                     class="p-input"
+                    country="CO"
                     placeholder="Selecciona tu país e ingresa tu celular "
                     :class="lectura ? `disabled showd` : ``"
                     :disabled="lectura"
@@ -403,6 +405,8 @@
 </template>
 
 <script>
+// import NiceAvatar from 'vue-nice-avatar'
+
 import { extend } from 'vee-validate'
 import departamentos from '~/static/departamentos.json'
 import dataMixin from '~/mixins/data.js'
@@ -421,6 +425,7 @@ extend('username', {
 export default {
   components: {
     Navigation,
+    // NiceAvatar,
   },
   mixins: [dataMixin],
   props: {
@@ -799,12 +804,12 @@ export default {
   @apply w-full;
 
   .wrap_form_col {
-    @apply text-pink-800 border border-orange-100 bg-white rounded-xl p-8 transition-all transition duration-500 mb-4;
+    @apply text-primary-800 border border-primary-100 bg-light rounded-xl p-8 transition-all transition duration-500 mb-4;
     &:focus-within {
-      @apply shadow-lg bg-opacity-80;
+      @apply shadow-lg;
     }
     h3 {
-      @apply border-b border-yellow-400 pb-2;
+      @apply border-b border-third-400 pb-2;
     }
   }
 }
@@ -818,7 +823,7 @@ export default {
 }
 .twitter-cropper {
   height: 521px;
-  @apply relative -mt-16 border-4 rounded-full overflow-hidden shadow-xl border-solid border-white cursor-move;
+  @apply relative -mt-16 border-4 rounded-full overflow-hidden shadow-xl border-solid border-light cursor-move;
   &__background {
     background-color: #edf2f4;
   }
@@ -839,6 +844,6 @@ export default {
   --tw-gradient-stops: var(--tw-gradient-from),
     var(--tw-gradient-to, rgba(255, 133, 51, 0));
   --tw-gradient-to: #ffd500;
-  @apply h-auto align-middle bg-gradient-to-r from-orange-400  to-yellow-500;
+  @apply h-auto align-middle bg-gradient-to-r from-primary-400  to-third-500;
 }
 </style>

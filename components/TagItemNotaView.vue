@@ -1,5 +1,8 @@
 <template>
-  <div class="item-wrapper">
+  <div
+    class="item-wrapper"
+    :class="(view ? ' view ' : '') + (lectura ? ' lectura ' : '')"
+  >
     <div class="item-wrapper-info t-nota">
       <div class="item-tipo">
         <i class="fas fa-sticky-note"></i> {{ info.tipo }}
@@ -36,7 +39,7 @@
         ref="aNot"
         :info="info"
         :edit="true"
-        @closeaNot="aNot = false"
+        @closeaModal="aNot = false"
       ></TagItemNotaForm>
       <template #footer>
         <div class="v-footer flex justify-between">
@@ -63,6 +66,16 @@ export default {
     info: {
       type: Object,
       required: true,
+    },
+    view: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    lectura: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
   data() {
@@ -103,5 +116,26 @@ export default {
 <style lang="postcss" scoped>
 .p-form-control {
   @apply mb-1;
+}
+.view {
+  .item-titulo {
+    @apply text-xl mb-2;
+  }
+  .item-nota {
+    @apply text-base mb-2;
+  }
+  .item-tipo,
+  .item-habilitado,
+  .item-wrapper-acciones {
+    @apply hidden;
+  }
+  &.lectura {
+    .item-titulo {
+      @apply text-base mb-2;
+    }
+    .item-nota {
+      @apply text-xs mb-2;
+    }
+  }
 }
 </style>

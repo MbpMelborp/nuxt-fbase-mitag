@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer :class="view ? 'view' : ''">
     <div class="container pt-9">
       <div class="links flex justify-center mb-9">
         <a href="#!">
@@ -115,21 +115,36 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      view: false,
+    }
+  },
+  created() {
+    console.log('ROUTE FOOTER', this.$route) // path is /users
+    if (this.$route.name === 'tag-id') {
+      this.view = true
+    }
+  },
+}
 </script>
 
 <style lang="postcss" scoped>
 footer {
-  @apply text-center text-white pt-12 bg-white;
+  @apply text-center text-light pt-12 bg-light;
+  &.view {
+    @apply pb-16;
+  }
   .links {
     a {
-      @apply mr-9 text-orange-500;
+      @apply mr-9 text-primary-500;
     }
   }
   .rights {
-    @apply text-center p-4 text-orange-700 bg-gray-50;
+    @apply text-center p-4 text-primary-700 bg-gray-50;
     a {
-      @apply text-orange-500;
+      @apply text-primary-500;
     }
   }
 }

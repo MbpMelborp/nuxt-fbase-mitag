@@ -44,11 +44,14 @@ exports.tag = functions.https.onRequest((req, res) => {
   try {
     const body = req.body
     const query = req.query
+    const params = req.params
     console.log(
       `🏁 API tag onRequest INIT body-> `,
       body,
       `Query -> `,
       query,
+      `Params -> `,
+      params,
       `\n`
     )
     cors(req, res, () => {
@@ -65,12 +68,27 @@ exports.tag = functions.https.onRequest((req, res) => {
             console.log('✅ -> API tag onRequest GET', tag)
             if (!tag.error) {
               if (query.file) {
-                res.set('Content-Type', `text/vcard; name="${query.id}.vcf"`)
-                res.set(
-                  'Content-Disposition',
-                  `inline; filename="${query.id}.vcf"`
-                )
-                res.send(tag.vcard)
+                return TAG_VCARD.generateCard(query.id, tag)
+                  .then((vcard) => {
+                    console.log(
+                      '✅  -> tagCreateUpdate archivo generado',
+                      vcard
+                    )
+                    res.set(
+                      'Content-Type',
+                      `text/vcard; name="${query.id}.vcf"`
+                    )
+                    res.set(
+                      'Content-Disposition',
+                      `inline; filename="${query.id}.vcf"`
+                    )
+                    res.send(vcard)
+                  })
+                  .catch((error) => {
+                    // console.log('🚨 -> ERROR tagCreateUpdate generado archivo', error)
+                    res.status(500).send('error generando archivo ' + error)
+                  })
+
                 //res.send(vCard.getFormattedString())
               } else {
                 res.status(200).json(tag)
@@ -82,6 +100,28 @@ exports.tag = functions.https.onRequest((req, res) => {
         } else {
           res.status(500).json({ error: true, message: 'No id' })
         }
+      } else if (req.method === 'POST') {
+        console.log(`🏁 API tag onRequest POST`, query, `\n`)
+        const list =
+          'abcdefghijklmnropqrstuvwABCDEFGHIJKLMNPQRSTUVWXYZ123456789'
+        let id = ''
+        for (let i = 0; i < 6; i++) {
+          const rnd = Math.floor(Math.random() * list.length)
+          id = id + list.charAt(rnd)
+        }
+        TAG_CONTROLLER.createTag(
+          params[0]
+            ? params[0] !== '/'
+              ? params[0].replace('/', '').replace(' ', '')
+              : id
+            : id
+        )
+          .then((tag) => {
+            res.status(200).json(tag)
+          })
+          .catch((error) => {
+            res.status(500).json({ error: error })
+          })
       }
     })
   } catch (error) {
@@ -123,44 +163,70 @@ exports.tagCreateUpdate = functions.firestore
     //   context.params.tag
     //   // change.after.data(),
     // )
-    try {
-      const tagId = context.params.tag
-      const tagData = change.after.data()
-      TAG_VCARD.generateCard(tagId, tagData)
-        .then((vcard) => {
-          // console.log('✅  -> tagCreateUpdate archivo generado', vcard)
-        })
-        .catch((error) => {
-          // console.log('🚨 -> ERROR tagCreateUpdate generado archivo', error)
-        })
 
-      //get as formatted string
-      //console.log('📧  -> tagCreateUpdate', vCard.getFormattedString())
+    const data = change.after.data()
+    const previousData = change.before.data()
 
-      // const bucket = admin.storage().bucket('vcards')
-      // bucket
-      //   .upload(file, {
-      //     // destination: 'vcards',
-      //     resumable: true,
-      //     public: true,
-      //   })
-      //   .then(async (data) => {
-      //     fs.unlinkSync(file)
-      //     const url = data[0].metadata.mediaLink
-      //     // let url = await bucket.ref(file).getDownloadURL()
-      //     console.log(
-      //       '✅  -> tagCreateUpdate archivo cargado',
-      //       data[0].metadata.mediaLink
-      //     )
-      //     tagRef.update({
-      //       vcard: url,
-      //     })
-      //   })
-      //   .catch((err) => {
-      //     console.log('🚨 -> ERROR tagCreateUpdate cargando archivo', err)
-      //   })
-    } catch (error) {
-      console.error('🚨 -> ERROR tagCreateUpdate', error)
+    // We'll only update if the name has changed.
+    // This is crucial to prevent infinite loops.
+    if (data == previousData) {
+      console.log('FINISH')
+      return null
     }
+    const tagId = context.params.tag
+    const tagData = change.after.data()
+    const vcard = TAG_VCARD.generateCard(tagId, tagData)
+    console.log(previousData.vcard != vcard, previousData.vcard, vcard)
+    if (previousData.vcard != vcard) {
+      // return change.after.ref.set(
+      //   {
+      //     vcard: vcard,
+      //   },
+      //   { merge: true }
+      // )
+    } else {
+      return null
+    }
+
+    // return TAG_VCARD.generateCard(tagId, tagData)
+    //   .then((vcard) => {
+    //     // console.log('✅  -> tagCreateUpdate archivo generado', vcard)
+    //     return change.after.ref.set(
+    //       {
+    //         vcard: 222, //vcard,
+    //       },
+    //       { merge: true }
+    //     )
+    //   })
+    //   .catch((error) => {
+    //     // console.log('🚨 -> ERROR tagCreateUpdate generado archivo', error)
+    //     return false
+    //   })
+
+    //get as formatted string
+    //console.log('📧  -> tagCreateUpdate', vCard.getFormattedString())
+
+    // const bucket = admin.storage().bucket('vcards')
+    // bucket
+    //   .upload(file, {
+    //     // destination: 'vcards',
+    //     resumable: true,
+    //     public: true,
+    //   })
+    //   .then(async (data) => {
+    //     fs.unlinkSync(file)
+    //     const url = data[0].metadata.mediaLink
+    //     // let url = await bucket.ref(file).getDownloadURL()
+    //     console.log(
+    //       '✅  -> tagCreateUpdate archivo cargado',
+    //       data[0].metadata.mediaLink
+    //     )
+    //     tagRef.update({
+    //       vcard: url,
+    //     })
+    //   })
+    //   .catch((err) => {
+    //     console.log('🚨 -> ERROR tagCreateUpdate cargando archivo', err)
+    //   })
   })
 */

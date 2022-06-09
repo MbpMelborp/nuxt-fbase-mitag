@@ -2,7 +2,7 @@
   <div class="login">
     <div class="hero">
       <div class="hero-container">
-        <div class="hero-container-center">
+        <div v-if="userData" class="hero-container-center">
           <TagFormPerfil :tag="userData.tag" :edicion="true"></TagFormPerfil>
         </div>
       </div>

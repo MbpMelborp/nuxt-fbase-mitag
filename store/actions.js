@@ -1,3 +1,5 @@
+const parseGooglePlace = require('parse-google-place')
+
 export const strict = false
 // const axios = require('axios')
 // const axiosRetry = require('axios-retry')
@@ -215,6 +217,26 @@ export default {
                   id: docs.docs[0].id,
                   ...docs.docs[0].data(),
                 })
+                if (window) {
+                  const bodyElement = document.querySelector('body')
+                  if (docs.docs[0].data().theme) {
+                    bodyElement.classList.remove(
+                      'theme-default',
+                      'theme-green',
+                      'theme-red',
+                      'theme-blue',
+                      'theme-yellow',
+                      'theme-light',
+                      'theme-dark'
+                    )
+                    bodyElement.classList.add(
+                      'theme-' + docs.docs[0].data().theme
+                    )
+                  } else {
+                    bodyElement.classList.add('theme-default')
+                    dispatch('actualizarTheme', 'default')
+                  }
+                }
               }
             })
             .catch((error) => {
@@ -351,8 +373,10 @@ export default {
               varios: [payload, ...state.userData.info.varios],
               iconos: state.userData.info.iconos,
               telefonos: state.userData.info.telefonos,
+              direcciones: state.userData.info.direcciones,
               emails: state.userData.info.emails,
               notas: state.userData.info.notas,
+              medias: state.userData.info.medias,
             },
             ultima_actualizacion: new Date(),
           })
@@ -389,8 +413,10 @@ export default {
               varios: [payload, ...state.userData.info.varios],
               iconos: state.userData.info.iconos,
               telefonos: state.userData.info.telefonos,
+              direcciones: state.userData.info.direcciones,
               emails: state.userData.info.emails,
               notas: state.userData.info.notas,
+              medias: state.userData.info.medias,
             },
             ultima_actualizacion: new Date(),
           })
@@ -427,8 +453,10 @@ export default {
               varios: state.userData.info.varios,
               iconos: state.userData.info.iconos,
               telefonos: state.userData.info.telefonos,
+              direcciones: state.userData.info.direcciones,
               emails: payload != null ? [payload] : [],
               notas: state.userData.info.notas,
+              medias: state.userData.info.medias,
             },
             ultima_actualizacion: new Date(),
           })
@@ -468,8 +496,10 @@ export default {
               varios: state.userData.info.varios,
               iconos: state.userData.info.iconos,
               telefonos: [payload, ...state.userData.info.telefonos],
+              direcciones: state.userData.info.direcciones,
               emails: state.userData.info.emails,
               notas: state.userData.info.notas,
+              medias: state.userData.info.medias,
             },
             ultima_actualizacion: new Date(),
           })
@@ -477,7 +507,7 @@ export default {
             dispatch('getUserData')
             return {
               error: false,
-              mensaje: `El teléfono Nota ${payload.tipo_tel.nombre} se ha aegregado con éxito`,
+              mensaje: `El teléfono ${payload.tipo_tel.nombre} se ha aegregado con éxito`,
             }
           })
           .catch((error) => {
@@ -488,9 +518,146 @@ export default {
         return { error: true, mensaje: 'Problema de conexión con Firebase' }
       }
     } catch (e) {
+      console.error('└──🚨 | ⛹  >  ACTION agregarTel', e)
       return {
         error: true,
         mensaje: 'Problema de ejecución en agregarTel ' + e,
+      }
+    }
+  },
+  agregarDir({ app, ctx, commit, state, dispatch }, payload) {
+    if (cl) console.info('🏁  | ⛹  >  ACTION agregarDir', payload)
+    try {
+      if (this.$fire.auth !== null) {
+        const location = payload.location
+        payload.location = parseGooglePlace(payload.location)
+        payload.location.geometry = {
+          lat: location.geometry.location.lat(),
+          lng: location.geometry.location.lng(),
+        }
+        return this.$fire.firestore
+          .collection('tags')
+          .doc(state.userData.tag)
+          .update({
+            info: {
+              varios: state.userData.info.varios,
+              iconos: state.userData.info.iconos,
+              direcciones: [payload, ...state.userData.info.direcciones],
+              telefonos: state.userData.info.telefonos,
+              emails: state.userData.info.emails,
+              notas: state.userData.info.notas,
+              medias: state.userData.info.medias,
+            },
+            ultima_actualizacion: new Date(),
+          })
+          .then((ingreso) => {
+            dispatch('getUserData')
+            return {
+              error: false,
+              mensaje: `La dirección se ha agregado con éxito`,
+            }
+          })
+          .catch((error) => {
+            console.error('└──🚨 | ⛹  >  ACTION agregarDir', error)
+            return { error: true, mensaje: error }
+          })
+      } else {
+        return { error: true, mensaje: 'Problema de conexión con Firebase' }
+      }
+    } catch (e) {
+      console.error('└──🚨 | ⛹  >  ACTION agregarDir', e)
+      return {
+        error: true,
+        // mensaje: 'Problema de ejecución en agregarDir ' + e,
+        mensaje: 'Por favor revisa los datos e intenta de nuevo',
+      }
+    }
+  },
+  agregarIco({ app, ctx, commit, state, dispatch }, payload) {
+    if (cl) console.info('🏁  | ⛹  >  ACTION agregarIco', payload)
+    try {
+      if (this.$fire.auth !== null) {
+        return this.$fire.firestore
+          .collection('tags')
+          .doc(state.userData.tag)
+          .update({
+            info: {
+              varios: state.userData.info.varios,
+              iconos: [payload, ...state.userData.info.iconos],
+              telefonos: state.userData.info.telefonos,
+              direcciones: state.userData.info.direcciones,
+              emails: state.userData.info.emails,
+              notas: state.userData.info.notas,
+              medias: state.userData.info.medias,
+            },
+            ultima_actualizacion: new Date(),
+          })
+          .then((ingreso) => {
+            dispatch('getUserData')
+            return {
+              error: false,
+              mensaje: `El icono se ha aegregado con éxito`,
+            }
+          })
+          .catch((error) => {
+            console.error('└──🚨 | ⛹  >  ACTION agregarIco', error)
+            return { error: true, mensaje: error }
+          })
+      } else {
+        return { error: true, mensaje: 'Problema de conexión con Firebase' }
+      }
+    } catch (e) {
+      console.error('└──🚨 | ⛹  >  ACTION agregarIco', e)
+      return {
+        error: true,
+        mensaje: 'Problema de ejecución en agregarIco ' + e,
+      }
+    }
+  },
+  agregarMedia({ app, ctx, commit, state, dispatch }, payload) {
+    if (cl) console.info('🏁  | ⛹  >  ACTION agregarMedia', payload)
+    try {
+      if (this.$fire.auth !== null) {
+        return this.$fire.firestore
+          .collection('tags')
+          .doc(state.userData.tag)
+          .update({
+            info: {
+              varios: state.userData.info.varios,
+              iconos: state.userData.info.iconos,
+              telefonos: state.userData.info.telefonos,
+              direcciones: state.userData.info.direcciones,
+              emails: state.userData.info.emails,
+              notas: state.userData.info.notas,
+              medias: [payload, ...state.userData.info.medias],
+            },
+            ultima_actualizacion: new Date(),
+          })
+          .then((ingreso) => {
+            dispatch('getUserData')
+            if (window.instgrm) {
+              window.instgrm.Embeds.process()
+            }
+            if (window.twitter) {
+              window.twitter.widgets.load()
+            }
+            return {
+              error: false,
+              mensaje: `La información se ha agregado con éxito`,
+            }
+          })
+          .catch((error) => {
+            console.error('└──🚨 | ⛹  >  ACTION agregarMedia', error)
+            return { error: true, mensaje: error }
+          })
+      } else {
+        return { error: true, mensaje: 'Problema de conexión con Firebase' }
+      }
+    } catch (e) {
+      console.error('└──🚨 | ⛹  >  ACTION agregarMedia', e)
+      return {
+        error: true,
+        mensaje: 'Problema de ejecución en agregarMedia ' + e,
       }
     }
   },
@@ -506,8 +673,10 @@ export default {
               varios: payload,
               iconos: state.userData.info.iconos,
               telefonos: state.userData.info.telefonos,
+              direcciones: state.userData.info.direcciones,
               emails: state.userData.info.emails,
               notas: state.userData.info.notas,
+              medias: state.userData.info.medias,
             },
             ultima_actualizacion: new Date(),
           })
@@ -547,8 +716,10 @@ export default {
               varios: state.userData.info.varios,
               iconos: state.userData.info.iconos,
               telefonos: payload,
+              direcciones: state.userData.info.direcciones,
               emails: state.userData.info.emails,
               notas: state.userData.info.notas,
+              medias: state.userData.info.medias,
             },
             ultima_actualizacion: new Date(),
           })
@@ -573,6 +744,294 @@ export default {
       return {
         error: true,
         mensaje: 'Problema de ejecución en actualizarTelefonos ' + e,
+      }
+    }
+  },
+  actualizarDir({ app, ctx, commit, state, dispatch }, payload) {
+    if (cl) console.info('🏁  | ⛹  >  ACTION actualizarDir', payload)
+    try {
+      if (this.$fire.auth !== null) {
+        return this.$fire.firestore
+          .collection('tags')
+          .doc(state.userData.tag)
+          .update({
+            info: {
+              varios: state.userData.info.varios,
+              iconos: state.userData.info.iconos,
+              direcciones: payload,
+              telefonos: state.userData.info.telefonos,
+              emails: state.userData.info.emails,
+              notas: state.userData.info.notas,
+              medias: state.userData.info.medias,
+            },
+            ultima_actualizacion: new Date(),
+          })
+          .then((ingreso) => {
+            dispatch('getUserData')
+            return {
+              error: false,
+              mensaje: `La dirección se ha actualizado con éxito`,
+            }
+          })
+          .catch((error) => {
+            console.error('└──🚨 | ⛹  >  ACTION actualizarDir', error)
+            return {
+              error: true,
+              mensaje: `La dirección no se ha podido actualizar.`,
+            }
+          })
+      } else {
+        return { error: true, mensaje: 'Problema de conexión con Firebase' }
+      }
+    } catch (e) {
+      return {
+        error: true,
+        mensaje: 'Problema de ejecución en actualizarDir ' + e,
+      }
+    }
+  },
+  actualizarIco({ app, ctx, commit, state, dispatch }, payload) {
+    if (cl) console.info('🏁  | ⛹  >  ACTION actualizarIco', payload)
+    try {
+      if (this.$fire.auth !== null) {
+        return this.$fire.firestore
+          .collection('tags')
+          .doc(state.userData.tag)
+          .update({
+            info: {
+              varios: state.userData.info.varios,
+              iconos: payload,
+              telefonos: state.userData.info.telefonos,
+              direcciones: state.userData.info.direcciones,
+              emails: state.userData.info.emails,
+              notas: state.userData.info.notas,
+              medias: state.userData.info.medias,
+            },
+            ultima_actualizacion: new Date(),
+          })
+          .then((ingreso) => {
+            dispatch('getUserData')
+            return {
+              error: false,
+              mensaje: `El icono se ha actualizado con éxito`,
+            }
+          })
+          .catch((error) => {
+            console.error('└──🚨 | ⛹  >  ACTION actualizarIco', error)
+            return {
+              error: true,
+              mensaje: `El icono no se ha podido actualizar.`,
+            }
+          })
+      } else {
+        return { error: true, mensaje: 'Problema de conexión con Firebase' }
+      }
+    } catch (e) {
+      console.error('└──🚨 | ⛹  >  ACTION actualizarIco', e)
+      return {
+        error: true,
+        mensaje:
+          'Problema de ejecución en actualizaractualizarIcoTelefonos ' + e,
+      }
+    }
+  },
+  actualizarMedia({ app, ctx, commit, state, dispatch }, payload) {
+    if (cl) console.info('🏁  | ⛹  >  ACTION actualizarMedia', payload)
+    try {
+      if (this.$fire.auth !== null) {
+        return this.$fire.firestore
+          .collection('tags')
+          .doc(state.userData.tag)
+          .update({
+            info: {
+              varios: state.userData.info.varios,
+              iconos: state.userData.info.iconos,
+              telefonos: state.userData.info.telefonos,
+              direcciones: state.userData.info.direcciones,
+              emails: state.userData.info.emails,
+              notas: state.userData.info.notas,
+              medias: payload,
+            },
+            ultima_actualizacion: new Date(),
+          })
+          .then((ingreso) => {
+            dispatch('getUserData')
+            if (window.instgrm) {
+              window.instgrm.Embeds.process()
+            }
+            if (window.twitter) {
+              window.twitter.widgets.load()
+            }
+            return {
+              error: false,
+              mensaje: `La información se ha actualizado con éxito`,
+            }
+          })
+          .catch((error) => {
+            console.error('└──🚨 | ⛹  >  ACTION actualizarMedia', error)
+            return {
+              error: true,
+              mensaje: `La información no se ha podido actualizar.`,
+            }
+          })
+      } else {
+        return { error: true, mensaje: 'Problema de conexión con Firebase' }
+      }
+    } catch (e) {
+      console.error('└──🚨 | ⛹  >  ACTION actualizarMedia', e)
+      return {
+        error: true,
+        mensaje:
+          'Problema de ejecución en actualizaractualizarMediaTelefonos ' + e,
+      }
+    }
+  },
+  actualizarTheme({ app, ctx, commit, state, dispatch }, payload) {
+    if (cl) console.info('🏁  | ⛹  >  ACTION actualizarTheme', payload)
+    try {
+      if (this.$fire.auth !== null) {
+        return this.$fire.firestore
+          .collection('tags')
+          .doc(state.userData.tag)
+          .update({
+            theme: payload,
+            ultima_actualizacion: new Date(),
+          })
+          .then((ingreso) => {
+            dispatch('getUserData')
+            if (window.instgrm) {
+              window.instgrm.Embeds.process()
+            }
+            if (window.twitter) {
+              window.twitter.widgets.load()
+            }
+            return {
+              error: false,
+              mensaje: `La información se ha actualizado con éxito`,
+            }
+          })
+          .catch((error) => {
+            console.error('└──🚨 | ⛹  >  ACTION actualizarTheme', error)
+            return {
+              error: true,
+              mensaje: `La información no se ha podido actualizar.`,
+            }
+          })
+      } else {
+        return { error: true, mensaje: 'Problema de conexión con Firebase' }
+      }
+    } catch (e) {
+      console.error('└──🚨 | ⛹  >  ACTION actualizarTheme', e)
+      return {
+        error: true,
+        mensaje: 'Problema de ejecución en actualizarTheme ' + e,
+      }
+    }
+  },
+  enviarLead({ app, ctx, commit, state, dispatch }, payload) {
+    if (cl) console.info('🏁  | ⛹  >  ACTION enviarLead', payload)
+    try {
+      const tag = payload.tag
+      const leads = payload.leads
+      delete payload.tag
+      delete payload.leads
+      const info = [payload, ...leads]
+      console.log('enviarLead', info)
+      payload.creado = new Date()
+      return this.$fire.firestore
+        .collection('tags')
+        .doc(tag)
+        .update({
+          leads: info,
+        })
+        .then((ingreso) => {
+          return {
+            error: false,
+            mensaje: `tu información se ha enviado`,
+            leads: info,
+          }
+        })
+        .catch((error) => {
+          console.error('└──🚨 | ⛹  >  ACTION enviarLead', error)
+          return {
+            error: true,
+            mensaje: `Ocurrio un error al enviar la información`,
+          }
+        })
+    } catch (e) {
+      console.error('└──🚨 | ⛹  >  ACTION enviarLead', e)
+      return {
+        error: true,
+        mensaje: 'Problema de ejecución en enviarLead ' + e,
+      }
+    }
+  },
+  vistaTag({ app, ctx, commit, state, dispatch }, payload) {
+    if (cl) console.info('🏁  | ⛹  >  ACTION vistaTag', payload)
+    try {
+      if (this.$fire.auth !== null) {
+        return this.$fire.firestore
+          .collection('tags')
+          .doc(payload.tag)
+          .update({
+            views: [new Date(), ...payload.views],
+          })
+          .then((ingreso) => {
+            return {
+              error: false,
+              mensaje: `La información se ha actualizado con éxito`,
+            }
+          })
+          .catch((error) => {
+            console.error('└──🚨 | ⛹  >  ACTION vistaTag', error)
+            return {
+              error: true,
+              mensaje: `La información no se ha podido actualizar.`,
+            }
+          })
+      } else {
+        return { error: true, mensaje: 'Problema de conexión con Firebase' }
+      }
+    } catch (e) {
+      console.error('└──🚨 | ⛹  >  ACTION vistaTag', e)
+      return {
+        error: true,
+        mensaje: 'Problema de ejecución en vistaTag ' + e,
+      }
+    }
+  },
+  getTagsList({ app, ctx, commit, state }) {
+    if (cl) console.info('🏁  | ⛹  >  ACTION getTags')
+    try {
+      if (this.$fire.auth !== null) {
+        if (cl) console.info('----❕ | ⛹  >  ACTION getTags uid')
+        if (state.authUser.uid) {
+          this.$fire.firestore
+            .collection('tags')
+            .get()
+            .then((docs) => {
+              const tags = []
+              if (docs.size > 0) {
+                docs.docs.forEach((doc) => {
+                  tags.push({
+                    id: doc.id,
+                    data: doc.data(),
+                  })
+                })
+                return tags
+              }
+            })
+            .catch((error) => {
+              console.error('└──🚨 | ⛹  >  ACTION getTags data', error)
+            })
+        }
+      } else {
+        return { error: true, mensaje: 'Problema de conexión con Firebase' }
+      }
+    } catch (e) {
+      return {
+        error: true,
+        mensaje: 'Problema de ejecución en getTags ' + e,
       }
     }
   },

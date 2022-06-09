@@ -96,13 +96,13 @@
               <span>Editar mi perfil </span> <i class="far fa-edit"></i>
             </nuxt-link>
           </div>
-          <div class="mt-10 py-10 border-t border-orange-200 text-center">
+          <div class="mt-10 py-10 border-t border-primary-200 text-center">
             <div class="flex flex-wrap justify-center">
               <div class="w-full lg:w-9/12 px-4">
                 <qr-code
-                  :text="`https://mitag.co/tag/${userData.tag}`"
+                  :text="`${location.origin}/tag/${userData.tag}`"
                   :size="240"
-                  color="#ffc299"
+                  color="#666666"
                   bg-color="#ffffff"
                   error-level="L"
                   class="
@@ -110,8 +110,8 @@
                     mx-auto
                     p-4
                     rounded-lg
-                    border border-4 border-orange-100
-                    bg-white
+                    border border-4 border-primary-100
+                    bg-light
                     mb-8
                   "
                 >
@@ -136,6 +136,11 @@
 import dataMixin from '~/mixins/data.js'
 export default {
   mixins: [dataMixin],
+  data() {
+    return {
+      location: !process.server ? window.location : '',
+    }
+  },
   mounted() {
     this.$fire.functions
       .httpsCallable('getTag')({
@@ -158,18 +163,18 @@ export default {
 
 <style lang="postcss" scoped>
 .perfil {
-  @apply pt-16 text-orange-700;
+  @apply pt-16 text-primary-700;
   .perfil-wrap {
-    @apply w-full px-4 mx-auto;
+    @apply w-full lg:px-4 px-1 mx-auto;
     .perfil-wrap-int {
-      @apply relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16 mb-16;
+      @apply relative flex flex-col min-w-0 break-words bg-light w-full mb-6 shadow-xl rounded-lg mt-16 mb-16;
       .perfil-wrap-int-top {
         @apply flex flex-wrap justify-center;
         .perfil-wrap-int-top-foto {
           @apply w-full px-4 flex justify-center;
           .foto-perfil {
             max-width: 250px;
-            @apply shadow-xl border-solid border-white border-4 rounded-full h-auto align-middle -mt-16 mx-auto object-cover bg-gradient-to-r from-orange-400  to-yellow-500;
+            @apply shadow-xl border-solid border-light border-4 rounded-full h-auto align-middle -mt-16 mx-auto object-cover bg-gradient-to-r from-primary-400  to-third-500;
           }
         }
         .perfil-wrap-int-top-info1 {
@@ -182,7 +187,7 @@ export default {
                 @apply mx-auto text-2xl font-bold  uppercase tracking-wide h-20 w-20 flex items-center;
               }
               .desc {
-                @apply text-sm text-orange-400;
+                @apply text-sm text-primary-400;
               }
             }
           }
@@ -196,13 +201,13 @@ export default {
         .tag-link {
           @apply text-2xl leading-normal mt-0 mb-4 font-bold;
           i {
-            @apply mr-2 text-lg text-red-400;
+            @apply mr-2 text-lg text-secondary-400;
           }
         }
         .tag-empresa {
           @apply text-xl leading-normal mt-0 mb-4 font-bold;
           i {
-            @apply mr-2 text-lg text-red-400;
+            @apply mr-2 text-lg text-secondary-400;
           }
         }
       }

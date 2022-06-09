@@ -40,6 +40,7 @@
                   placeholder="Selecciona tu país e ingresa tu celular "
                   :state="getValidationState(validationContext)"
                   v-bind="bindProps"
+                  country="CO"
                   @input="phoneChange"
                 ></vue-tel-input>
 

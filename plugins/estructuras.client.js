@@ -14,6 +14,7 @@ export default ({ context, app }, inject) => {
         id: null,
         tag: null,
         usado: true,
+        theme: 'default',
         email:
           process.env.NODE_ENV !== 'production'
             ? `test${Math.random()}@gmail.co`
@@ -33,7 +34,16 @@ export default ({ context, app }, inject) => {
         fecha_nacimiento: process.env.NODE_ENV !== 'production' ? `` : '',
         empresa: process.env.NODE_ENV !== 'production' ? `` : '',
         cargo: process.env.NODE_ENV !== 'production' ? `` : '',
-        info: { varios: [], iconos: [], telefonos: [], emails: [], notas: [] },
+        info: {
+          varios: [],
+          iconos: [],
+          telefonos: [],
+          emails: [],
+          notas: [],
+          direcciones: [],
+          medias: [],
+        },
+        leads: [],
       },
     }
     return typ[type]

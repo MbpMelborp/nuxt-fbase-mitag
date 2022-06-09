@@ -1,3 +1,24 @@
+// const themeDefault = {
+//   primary: '#474646',
+//   secondary: '#939393',
+//   third: '#3c3b3b',
+//   light: '#ffffff',
+//   dark: '#000000',
+// }
+
+function withOpacityValue(variable) {
+  return ({ opacityValue }) => {
+    // console.log('opacity', opacityValue)
+    if (opacityValue === undefined) {
+      return `var(${variable})`
+    } else if (opacityValue === 1) {
+      return `var(${variable})`
+    }
+    return `var(${variable})`
+    // return `rgb(var(${variable}) / ${opacityValue})`
+  }
+}
+
 module.exports = {
   mode: 'jit',
   purge: [
@@ -8,7 +29,12 @@ module.exports = {
     './nuxt.config.{js,ts}',
   ],
   darkMode: false, // or 'media' or 'class'
-  plugins: [require('@tailwindcss/aspect-ratio')],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+    // require('tailwindcss-css-variables-palette-plugin')({
+    //   colors: themeDefault,
+    // }),
+  ],
   theme: {
     fontFamily: {
       sans: ['Raleway', 'sans-serif !important'],
@@ -100,6 +126,63 @@ module.exports = {
           800: '#66220e',
           900: '#331107',
         },
+        primary: {
+          100: withOpacityValue('--color-primary-100'),
+          200: withOpacityValue('--color-primary-200'),
+          300: withOpacityValue('--color-primary-300'),
+          400: withOpacityValue('--color-primary-400'),
+          500: withOpacityValue('--color-primary-500'),
+          600: withOpacityValue('--color-primary-600'),
+          700: withOpacityValue('--color-primary-700'),
+          800: withOpacityValue('--color-primary-800'),
+          900: withOpacityValue('--color-primary-900'),
+        },
+        secondary: {
+          100: withOpacityValue('--color-secondary-100'),
+          200: withOpacityValue('--color-secondary-200'),
+          300: withOpacityValue('--color-secondary-300'),
+          400: withOpacityValue('--color-secondary-400'),
+          500: withOpacityValue('--color-secondary-500'),
+          600: withOpacityValue('--color-secondary-600'),
+          700: withOpacityValue('--color-secondary-700'),
+          800: withOpacityValue('--color-secondary-800'),
+          900: withOpacityValue('--color-secondary-900'),
+        },
+        third: {
+          100: withOpacityValue('--color-third-100'),
+          200: withOpacityValue('--color-third-200'),
+          300: withOpacityValue('--color-third-300'),
+          400: withOpacityValue('--color-third-400'),
+          500: withOpacityValue('--color-third-500'),
+          600: withOpacityValue('--color-third-600'),
+          700: withOpacityValue('--color-third-700'),
+          800: withOpacityValue('--color-third-800'),
+          900: withOpacityValue('--color-third-900'),
+        },
+        light: {
+          DEFAULT: withOpacityValue('--color-light'),
+          100: withOpacityValue('--color-light-100'),
+          200: withOpacityValue('--color-light-200'),
+          300: withOpacityValue('--color-light-300'),
+          400: withOpacityValue('--color-light-400'),
+          500: withOpacityValue('--color-light-500'),
+          600: withOpacityValue('--color-light-600'),
+          700: withOpacityValue('--color-light-700'),
+          800: withOpacityValue('--color-light-800'),
+          900: withOpacityValue('--color-light-900'),
+        },
+        dark: {
+          DEFAULT: withOpacityValue('--color-dark'),
+          100: withOpacityValue('--color-dark-100'),
+          200: withOpacityValue('--color-dark-200'),
+          300: withOpacityValue('--color-dark-300'),
+          400: withOpacityValue('--color-dark-400'),
+          500: withOpacityValue('--color-dark-500'),
+          600: withOpacityValue('--color-dark-600'),
+          700: withOpacityValue('--color-dark-700'),
+          800: withOpacityValue('--color-dark-800'),
+          900: withOpacityValue('--color-dark-900'),
+        },
       },
       zIndex: {
         1: 1,
@@ -161,4 +244,8 @@ module.exports = {
   variants: {
     extend: {},
   },
+  // corePlugins: {
+  //   backgroundOpacity: false,
+  //   textOpacity: false,
+  // },
 }

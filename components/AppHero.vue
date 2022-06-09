@@ -10,6 +10,9 @@
         items-center
       "
     >
+      <div class="w-full md:w-3/5 py-6 text-center">
+        <img class="w-full md:w-4/5 z-50" src="~/assets/images/banner.png" />
+      </div>
       <!--Left Col-->
       <div
         class="
@@ -22,17 +25,18 @@
           md:text-left
         "
       >
-        <p class="uppercase tracking-loose w-full">What business are you?</p>
-        <h1 class="my-4 text-5xl font-bold leading-tight">
-          Main Hero Message to sell yourself!
+        <h1 class="my-2 text-5xl leading-tight italic">
+          <b>¡Smart Cards</b> made
         </h1>
-        <p class="leading-normal text-2xl mb-8">
-          Sub-hero message, not too long and not too short. Make it just right!
+        <p class="leading-normal text-5xl mb-2 italic">
+          For <b>Smart Networking!</b>
         </p>
-        <button
+        <a
+          href="https://mitag.co/"
+          target="_blank"
           class="
             lg:mx-0
-            bg-white
+            bg-light
             text-gray-800
             font-bold
             rounded-full
@@ -48,13 +52,10 @@
             ease-in-out
           "
         >
-          Subscribe
-        </button>
+          Ir a la tienda
+        </a>
       </div>
       <!--Right Col-->
-      <div class="w-full md:w-3/5 py-6 text-center">
-        <img class="w-full md:w-4/5 z-50" src="~/assets/images/hero.png" />
-      </div>
     </div>
   </div>
 </template>

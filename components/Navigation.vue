@@ -163,7 +163,7 @@ export default {
     width: 18.75px;
 
     flex-shrink: 0;
-    fill: #ffc299;
+    fill: #000;
     .twitter-navigation--left {
       margin-right: 10px;
     }
@@ -188,14 +188,14 @@ export default {
     display: flex;
     position: relative;
     align-items: center;
-    @apply bg-orange-500;
+    @apply bg-primary-500;
   }
   .twitter-navigation__fill {
     align-self: stretch;
     flex-basis: auto;
     flex-direction: column;
     flex-shrink: 0;
-    @apply bg-orange-700;
+    @apply bg-primary-700;
   }
   .twitter-navigation__circle {
     width: 30px;
@@ -210,10 +210,10 @@ export default {
     transition-property: background-color, box-shadow;
     background-color: transparent;
     .twitter-navigation__circle:hover {
-      @apply bg-orange-500 bg-opacity-70;
+      @apply bg-primary-300;
     }
     .twitter-navigation__circle--focus {
-      @apply bg-orange-500 bg-opacity-70;
+      @apply bg-primary-300;
     }
   }
   .twitter-navigation__inner-circle {
@@ -225,7 +225,7 @@ export default {
     transition-property: transform;
     box-shadow: rgba(101, 119, 134, 0.2) 0px 0px 7px,
       rgba(101, 119, 134, 0.15) 0px 1px 3px 1px;
-    @apply bg-orange-500;
+    @apply bg-primary-500;
     .twitter-navigation__inner-circle--focus {
       transform: scale(1.2);
     }

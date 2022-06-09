@@ -12,7 +12,7 @@ import {
   //   TCard,
   //   TAlert,
   TModal,
-  //   TDropdown,
+  TDropdown,
   //   TRichSelect,
   //   TPagination,
   //   TTag,
@@ -37,7 +37,7 @@ const settings = {
     component: TInput,
     props: {
       classes:
-        'block w-full mb-1 px-3 py-2 text-pink-800 placeholder-gray-400 transition duration-100 ease-in-out bg-white border border-gray-100 rounded shadow-sm focus:border-orange-500 focus:ring-2 focus:ring-orange-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed',
+        'block w-full mb-1 px-3 py-2 text-pink-800 placeholder-gray-400 transition duration-100 ease-in-out bg-white border border-gray-100 rounded shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed',
       // ...More settings
     },
   },
@@ -45,7 +45,7 @@ const settings = {
     component: TButton,
     props: {
       classes:
-        'block px-8 py-3 shadow-xl rounded-lg duration-300 ease-in-out text-orange-900 font-bold bg-gradient-to-r from-orange-400 hover:scale-105  to-yellow-500 focus:border-blue-500 focus:ring-2 focus:ring-orange-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed',
+        'block px-8 py-3 shadow-xl rounded-lg duration-300 ease-in-out text-primary-900 font-bold bg-gradient-to-r from-primary-400 hover:scale-105  to-secondary-100 focus:border-blue-500 focus:ring-2 focus:ring-primary-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed',
       // ...More settings
     },
   },
@@ -53,10 +53,10 @@ const settings = {
     component: TCheckbox,
     props: {
       fixedClasses:
-        'transition duration-100 ease-in-out rounded shadow-sm focus:border-orange-500 focus:ring-2 focus:ring-orange-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0 disabled:opacity-50 disabled:cursor-not-allowed',
-      classes: 'text-orange-500 border-orange-300 ',
+        'transition duration-100 ease-in-out rounded shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:outline-none focus:ring-opacity-50 focus:ring-offset-0 disabled:opacity-50 disabled:cursor-not-allowed',
+      classes: 'text-primary-500 border-primary-300 ',
       variants: {
-        error: 'text-red-500 border-red-300',
+        error: 'text-secondary-500 border-secondary-300',
         success: 'text-green-500 border-green-300',
       },
     },
@@ -73,7 +73,7 @@ const settings = {
         header: 'border-b p-3 rounded-t-xl text-2xl font-bold text-center',
         footer: ' p-3 rounded-b-xl',
         close:
-          'flex items-center justify-center rounded-full absolute right-0 top-0 -m-3 h-8 w-8 transition duration-100 ease-in-out focus:ring-2 focus:ring-orange-500 focus:outline-none focus:ring-opacity-50',
+          'flex items-center justify-center rounded-full absolute right-0 top-0 -m-3 h-8 w-8 transition duration-100 ease-in-out focus:ring-2 focus:ring-primary-500 focus:outline-none focus:ring-opacity-50',
       },
       classes: {
         overlay: 'bg-black',
@@ -82,7 +82,7 @@ const settings = {
         body: 'p-3',
         header: 'border-gray-100',
         footer: 'bg-white',
-        close: 'bg-orange-500 text-white hover:bg-orange-800',
+        close: 'bg-primary-500 text-white hover:bg-primary-800',
         closeIcon: 'fill-current h-4 w-4',
         overlayEnterClass: 'opacity-0',
         overlayEnterActiveClass: 'transition ease-out duration-100',
@@ -99,12 +99,12 @@ const settings = {
       },
       variants: {
         danger: {
-          overlay: 'bg-red-100',
-          header: 'border-red-50 text-red-700',
+          overlay: 'bg-secondary-100',
+          header: 'border-secondary-50 text-secondary-700',
           close:
-            'bg-red-50 text-red-700 hover:bg-red-200 border-red-100 border',
-          modal: 'bg-white border border-red-100 shadow-lg',
-          footer: 'bg-red-50',
+            'bg-secondary-50 text-secondary-700 hover:bg-secondary-200 border-secondary-100 border',
+          modal: 'bg-white border border-secondary-100 shadow-lg',
+          footer: 'bg-secondary-50',
         },
       },
     },
@@ -116,11 +116,11 @@ const settings = {
         wrapper:
           'relative inline-flex flex-shrink-0 cursor-pointer transition-colors ease-in-out duration-200',
         wrapperChecked:
-          'relative inline-flex flex-shrink-0 cursor-pointer transition-colors ease-in-out duration-200  border-2 border-transparent focus:ring-2 focus:ring-orange-500 focus:outline-none focus:ring-opacity-50',
+          'relative inline-flex flex-shrink-0 cursor-pointer transition-colors ease-in-out duration-200  border-2 border-transparent focus:ring-2 focus:ring-primary-500 focus:outline-none focus:ring-opacity-50',
         wrapperDisabled:
           'relative inline-flex flex-shrink-0 cursor-pointer transition-colors ease-in-out duration-200 opacity-50 cursor-not-allowed',
         wrapperCheckedDisabled:
-          'relative inline-flex flex-shrink-0 cursor-pointer transition-colors ease-in-out duration-200 opacity-50 cursor-not-allowed border-2 border-transparent focus:ring-2 focus:ring-orange-500 focus:outline-none focus:ring-opacity-50',
+          'relative inline-flex flex-shrink-0 cursor-pointer transition-colors ease-in-out duration-200 opacity-50 cursor-not-allowed border-2 border-transparent focus:ring-2 focus:ring-primary-500 focus:outline-none focus:ring-opacity-50',
         button:
           'inline-block absolute transform translate-x-0 transition ease-in-out duration-200',
         buttonChecked:
@@ -130,24 +130,24 @@ const settings = {
       },
       classes: {
         wrapper:
-          'bg-orange-100 rounded-full border-2 border-transparent focus:ring-2 focus:ring-orange-500 focus:outline-none focus:ring-opacity-50',
-        wrapperChecked: 'bg-orange-500 rounded-full',
+          'bg-primary-100 rounded-full border-2 border-transparent focus:ring-2 focus:ring-primary-500 focus:outline-none focus:ring-opacity-50',
+        wrapperChecked: 'bg-primary-500 rounded-full',
         wrapperDisabled:
-          'bg-orange-100 rounded-full border-2 border-transparent focus:ring-2 focus:ring-orange-500 focus:outline-none focus:ring-opacity-50',
-        wrapperCheckedDisabled: 'bg-orange-500',
+          'bg-primary-100 rounded-full border-2 border-transparent focus:ring-2 focus:ring-primary-500 focus:outline-none focus:ring-opacity-50',
+        wrapperCheckedDisabled: 'bg-primary-500',
         button:
-          'h-5 w-5 rounded-full bg-white shadow flex items-center justify-center text-orange-400 text-xs',
+          'h-5 w-5 rounded-full bg-white shadow flex items-center justify-center text-primary-400 text-xs',
         buttonChecked:
-          'h-5 w-5 rounded-full bg-white shadow flex items-center justify-center text-orange-500 text-xs',
+          'h-5 w-5 rounded-full bg-white shadow flex items-center justify-center text-primary-500 text-xs',
         checkedPlaceholder:
-          'rounded-full w-5 h-5 flex items-center justify-center text-orange-400 text-xs',
+          'rounded-full w-5 h-5 flex items-center justify-center text-primary-400 text-xs',
         uncheckedPlaceholder:
-          'rounded-full w-5 h-5 flex items-center justify-center text-orange-400 text-xs',
+          'rounded-full w-5 h-5 flex items-center justify-center text-primary-400 text-xs',
       },
       variants: {
         danger: {
-          wrapperChecked: 'bg-red-500 rounded-full',
-          wrapperCheckedDisabled: 'bg-red-500 rounded-full',
+          wrapperChecked: 'bg-secondary-500 rounded-full',
+          wrapperCheckedDisabled: 'bg-secondary-500 rounded-full',
         },
         success: {
           wrapperChecked: 'bg-green-500 rounded-full',
@@ -155,13 +155,13 @@ const settings = {
         },
         box: {
           wrapper:
-            'bg-gray-100 rounded-sm border-2 border-transparent focus:ring-2 focus:ring-orange-500 focus:outline-none focus:ring-opacity-50',
-          wrapperChecked: 'bg-orange-500 rounded-sm',
-          wrapperCheckedDisabled: 'bg-orange-500 rounded-sm',
+            'bg-gray-100 rounded-sm border-2 border-transparent focus:ring-2 focus:ring-primary-500 focus:outline-none focus:ring-opacity-50',
+          wrapperChecked: 'bg-primary-500 rounded-sm',
+          wrapperCheckedDisabled: 'bg-primary-500 rounded-sm',
           button:
             'h-6 w-6 rounded-sm bg-white shadow flex items-center justify-center text-gray-400 text-xs',
           buttonChecked:
-            'h-6 w-6 rounded-sm  bg-white shadow flex items-center justify-center text-orange-500 text-xs',
+            'h-6 w-6 rounded-sm  bg-white shadow flex items-center justify-center text-primary-500 text-xs',
           checkedPlaceholder:
             'rounded-sm w-6 h-6 flex items-center justify-center text-gray-400 text-xs',
           uncheckedPlaceholder:
@@ -174,7 +174,7 @@ const settings = {
     component: TTextarea,
     props: {
       classes:
-        'text-sm h-32 block w-full mb-1 px-3 py-2 text-pink-800 placeholder-gray-400 transition duration-100 ease-in-out bg-white border border-gray-100 rounded shadow-sm focus:border-orange-500 focus:ring-2 focus:ring-orange-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed',
+        'text-sm h-32 block w-full mb-1 px-3 py-2 text-pink-800 placeholder-gray-400 transition duration-100 ease-in-out bg-white border border-gray-100 rounded shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed',
       // ...More settings
     },
   },
@@ -186,9 +186,37 @@ const settings = {
       classes:
         'text-black placeholder-gray-400 bg-white border-gray-300 focus:border-blue-500 ',
       variants: {
-        danger: 'border-red-300 bg-red-50 placeholder-red-200 text-red-900',
+        danger: 'border-secondary-300 bg-secondary-50 placeholder-secondary-200 text-secondary-900',
         success:
           'border-green-300 bg-green-50 placeholder-gray-400 text-green-900',
+      },
+    },
+  },
+  't-dropdown': {
+    component: TDropdown,
+    props: {
+      fixedClasses: {
+        button:
+          'flex items-center text-white block px-4 py-2 transition duration-100 ease-in-out border border-transparent rounded shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed',
+        wrapper: 'inline-flex flex-col',
+        dropdownWrapper: 'relative z-10',
+        dropdown: 'origin-top-left absolute right-0 w-56 rounded shadow mt-1',
+        enterClass: 'opacity-0 scale-95',
+        enterActiveClass: 'transition transform ease-out duration-100',
+        enterToClass: 'opacity-100 scale-100',
+        leaveClass: 'opacity-100 scale-100',
+        leaveActiveClass: 'transition transform ease-in duration-75',
+        leaveToClass: 'opacity-0 scale-95',
+      },
+      classes: {
+        button: 'bg-primary-500 hover:bg-primary-600',
+        dropdown: 'bg-white',
+      },
+      variants: {
+        danger: {
+          button: 'bg-secondary-500 hover:bg-secondary-600',
+          dropdown: 'bg-secondary-50',
+        },
       },
     },
   },
