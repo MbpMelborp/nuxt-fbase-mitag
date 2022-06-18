@@ -3,63 +3,54 @@
     "name": "login",
     "path": "/login",
     "component": "/Volumes/JUANM@DISK/DEV/mitag/nuxt-fbase-mitag/pages/login.vue",
-    "chunkName": "pages/login",
-    "_name": "_850c5030"
+    "chunkName": "pages/login"
   },
   {
     "name": "manager",
     "path": "/manager",
     "component": "/Volumes/JUANM@DISK/DEV/mitag/nuxt-fbase-mitag/pages/manager/index.vue",
-    "chunkName": "pages/manager/index",
-    "_name": "_81988422"
+    "chunkName": "pages/manager/index"
   },
   {
     "name": "perfil",
     "path": "/perfil",
     "component": "/Volumes/JUANM@DISK/DEV/mitag/nuxt-fbase-mitag/pages/perfil/index.vue",
-    "chunkName": "pages/perfil/index",
-    "_name": "_3f173da0"
+    "chunkName": "pages/perfil/index"
   },
   {
     "name": "perfil-edit",
     "path": "/perfil/edit",
     "component": "/Volumes/JUANM@DISK/DEV/mitag/nuxt-fbase-mitag/pages/perfil/edit.vue",
-    "chunkName": "pages/perfil/edit",
-    "_name": "_3176b1ac"
+    "chunkName": "pages/perfil/edit"
   },
   {
     "name": "perfil-leads",
     "path": "/perfil/leads",
     "component": "/Volumes/JUANM@DISK/DEV/mitag/nuxt-fbase-mitag/pages/perfil/leads.vue",
-    "chunkName": "pages/perfil/leads",
-    "_name": "_97681236"
+    "chunkName": "pages/perfil/leads"
   },
   {
     "name": "tag-id",
     "path": "/tag/:id",
     "component": "/Volumes/JUANM@DISK/DEV/mitag/nuxt-fbase-mitag/pages/tag/_id/index.vue",
-    "chunkName": "pages/tag/_id/index",
-    "_name": "_3097bbf2"
+    "chunkName": "pages/tag/_id/index"
   },
   {
     "name": "tag-id-create",
     "path": "/tag/:id?/create",
     "component": "/Volumes/JUANM@DISK/DEV/mitag/nuxt-fbase-mitag/pages/tag/_id/create/index.vue",
-    "chunkName": "pages/tag/_id/create/index",
-    "_name": "_0d29ba4c"
+    "chunkName": "pages/tag/_id/create/index"
   },
   {
     "name": "tag-id-edit",
     "path": "/tag/:id?/edit",
     "component": "/Volumes/JUANM@DISK/DEV/mitag/nuxt-fbase-mitag/pages/tag/_id/edit/index.vue",
-    "chunkName": "pages/tag/_id/edit/index",
-    "_name": "_b001e9b0"
+    "chunkName": "pages/tag/_id/edit/index"
   },
   {
     "name": "index",
     "path": "/",
     "component": "/Volumes/JUANM@DISK/DEV/mitag/nuxt-fbase-mitag/pages/index.vue",
-    "chunkName": "pages/index",
-    "_name": "_185b965e"
+    "chunkName": "pages/index"
   }
 ]

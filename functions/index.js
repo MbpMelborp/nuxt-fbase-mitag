@@ -6,6 +6,7 @@ const db = admin.firestore()
 
 const TAG_CONTROLLER = require('./controllers/tags')
 const TAG_VCARD = require('./controllers/vcard')
+const MAIL_CONTROLER = require('./controllers/mail')
 // const db = admin.firestore()
 
 // VCARD
@@ -114,7 +115,8 @@ exports.tag = functions.https.onRequest((req, res) => {
             ? params[0] !== '/'
               ? params[0].replace('/', '').replace(' ', '')
               : id
-            : id
+            : id,
+          body
         )
           .then((tag) => {
             res.status(200).json(tag)
@@ -130,6 +132,50 @@ exports.tag = functions.https.onRequest((req, res) => {
   }
 })
 
+/**
+ * API
+ *
+ */
+exports.mail = functions.https.onRequest((req, res) => {
+  try {
+    const body = req.body
+    const query = req.query
+    const params = req.params
+    console.log(
+      `🏁 API mail onRequest INIT body-> `,
+      body,
+      `Query -> `,
+      query,
+      `Params -> `,
+      params,
+      `\n`
+    )
+    cors(req, res, () => {
+      res.set('Access-Control-Allow-Origin', '*')
+      if (req.method === 'OPTIONS') {
+        res.set('Access-Control-Allow-Methods', 'GET,POST')
+        res.set('Access-Control-Allow-Headers', 'Content-Type')
+        res.set('Access-Control-Max-Age', '3600')
+        res.status(204).send('')
+      } else if (req.method === 'GET') {
+        //
+      } else if (req.method === 'POST') {
+        console.log(`🏁 API mail onRequest POST`, query, `\n`)
+
+        MAIL_CONTROLER.sendMail(body)
+          .then((tag) => {
+            res.status(200).json(tag)
+          })
+          .catch((error) => {
+            res.status(500).json({ error: error })
+          })
+      }
+    })
+  } catch (error) {
+    res.status(500).send(error)
+    console.error(error)
+  }
+})
 /**
  * CALLABLES
  *

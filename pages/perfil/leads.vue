@@ -8,20 +8,29 @@
               <h2 class="text-3xl mb-8 font-bold uppercase">
                 Contactos ingresados desde tu perfil
               </h2>
-              <div class="grid grid-cols-4 space-x-4 space-y-1">
-                <div class="text-lg font-bold">Nombre</div>
-                <div class="text-lg font-bold">Email</div>
-                <div class="text-lg font-bold">Teléfono</div>
-                <div class="text-lg font-bold">Fecha</div>
-                <template v-for="(item, w) in userData.leads">
-                  <div :key="'lead' + w + '_n'">{{ item.nombre }}</div>
-                  <div :key="'lead' + w + '_e'">{{ item.email }}</div>
-                  <div :key="'lead' + w + '_p'">{{ item.phone }}</div>
-                  <div :key="'lead' + w + '_d'">
-                    {{ item.creado.toDate().toISOString().split('T')[0] }}
-                  </div>
-                </template>
-              </div>
+              <table v-if="userData.leads" class="tb">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(item, w) in userData.leads"
+                    :key="'lead' + w + '_n'"
+                  >
+                    <td>{{ item.nombre }}</td>
+                    <td>{{ item.email }}</td>
+                    <td>{{ item.phone }}</td>
+                    <td>
+                      {{ item.creado.toDate().toISOString().split('T')[0] }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -36,7 +45,9 @@ import dataMixin from '~/mixins/data.js'
 export default {
   mixins: [dataMixin],
   middleware: 'auth',
-  mounted() {},
+  mounted() {
+    this.getUserData()
+  },
 }
 </script>
 
@@ -49,6 +60,17 @@ export default {
     }
     h3 {
       @apply border-b border-third-400 pb-2;
+    }
+  }
+}
+.tb {
+  @apply w-full table-fixed border-separate border border-primary-500 rounded;
+  tr {
+    th {
+      @apply border-b border-third-400 text-left text-gray-600 font-bold p-2 bg-primary-100 text-primary-800;
+    }
+    td {
+      @apply text-sm border-b border-third-400 text-left text-gray-600 p-1;
     }
   }
 }

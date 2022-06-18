@@ -528,6 +528,7 @@ export default {
       // this.$set(this.form, this.userData)
     },
     phoneChange(phone, phoneo) {
+      this.form.telefono_celular = phone
       this.form.telefono_celular_info = phoneo
     },
     setFechas() {

@@ -932,9 +932,9 @@ export default {
     if (cl) console.info('🏁  | ⛹  >  ACTION enviarLead', payload)
     try {
       const tag = payload.tag
-      const leads = payload.leads
+      const leads = payload.leads ? payload.leads : []
       delete payload.tag
-      delete payload.leads
+      if (payload.leads) delete payload.leads
       const info = [payload, ...leads]
       console.log('enviarLead', info)
       payload.creado = new Date()
