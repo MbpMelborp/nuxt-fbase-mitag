@@ -283,27 +283,7 @@
                   </div>
                 </ValidationProvider>
               </div>
-              <!-- <ValidationProvider
-              v-slot="validationContext"
-              name="celular"
-              :rules="{ required: true }"
-            >
-              <div class="p-form-control">
-                <label for="celular" class="p-label"> Celular </label>
-                <t-input
-                  v-model="form.telefono_celular"
-                  name="celular"
-                  :class="lectura ? `disabled showd` : ``"
-                  :disabled="lectura"
-                  :state="getValidationState(validationContext)"
-                  type="tel"
-                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                />
-                <span class="p-error">
-                  {{ validationContext.errors[0] }}
-                </span>
-              </div>
-            </ValidationProvider> -->
+
               <ValidationProvider
                 v-slot="validationContext"
                 name="celular"
@@ -383,6 +363,34 @@
                       </li>
                     </ul>
                   </div>
+                </div>
+              </ValidationProvider>
+              <ValidationProvider
+                v-slot="validationContext"
+                name="cargo"
+                :rules="{ required: true, terminos: true }"
+                class="w-full"
+              >
+                <div class="p-form-control">
+                  <label class="flex items-center">
+                    <t-checkbox
+                      v-model="form.terminos"
+                      name="terminos"
+                      :value="true"
+                      :checked="form.terminos"
+                      :disabled="lectura"
+                      :state="getValidationState(validationContext)"
+                    />
+                    <span class="ml-2 text-sm"
+                      >Acepto la
+                      <a href="https://mitag.co/politica-de-tratamiento-de-datos-de-la-informacion/" target="_blank"
+                        >política de tratamiento de datos</a
+                      ></span
+                    >
+                  </label>
+                  <span class="p-error">
+                    {{ validationContext.errors[0] }}
+                  </span>
                 </div>
               </ValidationProvider>
               <div v-if="!lectura" class="w-full flex justify-end m-4 p-8">
@@ -488,6 +496,14 @@ export default {
     extend('uniqueEmail', {
       validate: this.isEmailUnique,
       message: 'Ya existe una persona registrada con este email',
+    })
+    extend('terminos', {
+      validate(value, args) {
+        console.log('terminos', value)
+        return value === true
+      },
+      params: ['val'],
+      message: 'Acepta los términos y condiciones',
     })
     if (!this.edicion) {
       this.checkTag(this.tag)

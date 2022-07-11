@@ -1,6 +1,6 @@
 <template>
-  <footer :class="view ? 'view' : ''">
-    <div class="container pt-9">
+  <footer :class="view ? 'view pb-9' : ''">
+    <div class="hidden container">
       <div class="links flex justify-center mb-9">
         <a href="#!">
           <svg
@@ -108,8 +108,8 @@
     </div>
 
     <div class="rights">
-      © 2021 Copyright:
-      <a href="https://tailwind-elements.com/">Mi Tag</a>
+      © {{ new Date().getFullYear() }} Copyright:
+      <a href="https://mitag.co" target="_blank">Mi Tag</a>
     </div>
   </footer>
 </template>

@@ -44,6 +44,7 @@ export default ({ context, app }, inject) => {
           medias: [],
         },
         leads: [],
+        terminos: false,
       },
     }
     return typ[type]

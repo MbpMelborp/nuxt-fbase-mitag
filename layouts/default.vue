@@ -7,7 +7,7 @@
 </template>
 <style lang="postcss">
 body {
-  @apply min-h-screen bg-gradient-to-r from-primary-400  to-third-500;
+  @apply min-h-screen bg-gradient-to-r from-primary-500  to-third-500;
 }
 .btn-link {
   @apply block px-8 py-3 shadow-lg rounded-xl duration-300 ease-in-out text-primary-900 font-bold bg-gradient-to-r from-primary-400 hover:scale-105  to-third-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed;

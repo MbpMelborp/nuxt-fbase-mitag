@@ -932,11 +932,11 @@ export default {
     if (cl) console.info('🏁  | ⛹  >  ACTION enviarLead', payload)
     try {
       const tag = payload.tag
-      const leads = payload.leads ? payload.leads : []
+      const leads = payload.leads !== undefined ? payload.leads : []
       delete payload.tag
-      if (payload.leads) delete payload.leads
+      if (payload.leads === undefined) delete payload.leads
       const info = [payload, ...leads]
-      console.log('enviarLead', info)
+      console.log('enviarLead', leads)
       payload.creado = new Date()
       return this.$fire.firestore
         .collection('tags')
@@ -1032,6 +1032,85 @@ export default {
       return {
         error: true,
         mensaje: 'Problema de ejecución en getTags ' + e,
+      }
+    }
+  },
+  agregarCorreo({ app, ctx, commit, state, dispatch }, payload) {
+    if (cl) console.info('🏁  | ⛹  >  ACTION updateCorreo', payload)
+    try {
+      if (this.$fire.auth !== null) {
+        return this.$fire.firestore
+          .collection('correo')
+          .doc('admin')
+          .update({
+            mail: payload,
+          })
+          .then((ingreso) => {
+            return {
+              error: false,
+              mensaje: `Èl correo se actualizó con éxito`,
+            }
+          })
+          .catch((error) => {
+            console.error('└──🚨 | ⛹  >  ACTION updateCorreo', error)
+            return {
+              error: true,
+              mensaje: `ﬁEl correo no se pudo actualizar.`,
+            }
+          })
+      } else {
+        return { error: true, mensaje: 'Problema de conexión con Firebase' }
+      }
+    } catch (e) {
+      console.error('└──🚨 | ⛹  >  ACTION updateCorreo', e)
+      return {
+        error: true,
+        mensaje: 'Problema de ejecución en updateCorreo ' + e,
+      }
+    }
+  },
+  getCorreo({ app, ctx, commit, state }) {
+    console.group()
+    console.info('🏁  | ⛹  >  ACTION getCorreo')
+    try {
+      // if (this.$fire.auth !== null) {
+      console.info('└──❕ | ⛹  >  ACTION getCorreo id')
+
+      return this.$fire.firestore
+        .collection('correo')
+        .doc('admin')
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            console.info('└──❕ | ⛹  >  ACTION getCorreo data', doc.data())
+            console.groupEnd()
+            return doc.data().mail
+          } else {
+            console.error(
+              '└──🚨 | ⛹  >  ACTION getCorreo data',
+              'El correo no ha sido encontrado'
+            )
+            console.groupEnd()
+            return {
+              error: true,
+              mensaje: 'El correo no ha sido encontrado',
+            }
+          }
+        })
+        .catch((error) => {
+          console.error('└──🚨 | ⛹  >  ACTION updateCorreo', error)
+          return {
+            error: true,
+            mensaje: `ﬁEl correo no se pudo actualizar.`,
+          }
+        })
+    } catch (e) {
+      console.error('└──🚨 | ⛹  >  ACTION getCorreo data', e)
+      console.groupEnd()
+
+      return {
+        error: true,
+        mensaje: 'Problema de ejecución en getCorreo ' + e,
       }
     }
   },

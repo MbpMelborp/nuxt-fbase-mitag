@@ -73,7 +73,9 @@
               </li>
               <template v-if="userData">
                 <li v-if="userData.admin" class="mr-3">
-                  <nuxt-link :to="`/manager`"> Administrar </nuxt-link>
+                  <nuxt-link :to="`/manager`">
+                    <i class="fas fa-cog"></i>
+                  </nuxt-link>
                 </li>
               </template>
             </ul>
@@ -122,7 +124,9 @@
           </li>
           <template v-if="userData">
             <li v-if="userData.admin" class="mr-3">
-              <nuxt-link :to="`/manager`"> Administrar </nuxt-link>
+              <nuxt-link :to="`/manager`">
+                <i class="text-2xl fas fa-cog"></i>
+              </nuxt-link>
             </li>
           </template>
         </ul>

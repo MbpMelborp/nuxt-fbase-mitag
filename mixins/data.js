@@ -124,6 +124,8 @@ export default {
       enviarLead: 'enviarLead',
 
       getTagsList: 'getTagsList',
+      agregarCorreo: 'agregarCorreo',
+      getCorreo: 'getCorreo',
     }),
     NumbersOnly(evt) {
       evt = evt || window.event

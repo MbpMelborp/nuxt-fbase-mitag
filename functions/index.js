@@ -1,6 +1,10 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 const cors = require('cors')({ origin: true })
+var QRCode = require('qrcode-svg')
+var Stream = require('stream')
+const Sharp = require('sharp')
+
 admin.initializeApp()
 const db = admin.firestore()
 
@@ -196,6 +200,58 @@ exports.getTag = functions.https.onCall((data, context) => {
   }
 })
 
+exports.getQr = functions.https.onRequest((req, res) => {
+  try {
+    const body = req.body
+    const query = req.query
+    const params = req.params
+    console.log(
+      `🏁 API getQr onRequest INIT body-> `,
+      body,
+      `Query -> `,
+      query,
+      `Params -> `,
+      params,
+      `\n`
+    )
+    cors(req, res, () => {
+      res.set('Access-Control-Allow-Origin', '*')
+      if (req.method === 'OPTIONS') {
+        res.set('Access-Control-Allow-Methods', 'GET,POST')
+        res.set('Access-Control-Allow-Headers', 'Content-Type')
+        res.set('Access-Control-Max-Age', '3600')
+        res.status(204).send('')
+      } else if (req.method === 'GET') {
+        const qrcode = new QRCode({
+          content: 'https://app.mitag.co/tag/' + query.id,
+          padding: 1,
+          width: 800,
+          height: 800,
+          color: '#000000',
+          background: 'transparent',
+          ecl: 'M',
+        })
+        const svg = qrcode.svg()
+
+        Sharp(Buffer.from(svg))
+          .png()
+          .toBuffer()
+          .then((data) => {
+            res.set(
+              'Content-disposition',
+              'attachment; filename=' + query.id + '.png'
+            )
+            res.set('Content-Type', 'image/png')
+            res.send(data)
+          })
+      } else if (req.method === 'POST') {
+      }
+    })
+  } catch (error) {
+    res.status(500).send(error)
+    console.error(error)
+  }
+})
 /**
  * TRIGGERS DE EN DOCUMENTOS
  *

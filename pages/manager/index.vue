@@ -5,20 +5,43 @@
         <div v-if="userData" class="hero-container-full">
           <div class="flex">
             <div class="manager_wrap lg:w-full">
-              <div class="manager_form_col">
-                <h2 class="text-1xl mb-2 font-bold uppercase">AGREGAR TAG</h2>
-                <div class="flex">
-                  <div class="w-8/12 mt-1">
+              <div class="manager_form_col flex space-x-4">
+                <div class="flex items-center space-x-4">
+                  <h2 class="flex-1 text-lg font-bold uppercase">
+                    AGREGAR TAG
+                  </h2>
+                  <div class="flex-1">
                     <div class="p-form-control mb-1">
                       <t-input v-model="form.tag" type="text" />
                     </div>
                   </div>
-                  <div class="w-4/12">
+                  <div>
                     <t-button
                       class="p-btn p-btn-full w-full"
                       @click="agregarTag"
                     >
                       Ingresar
+                    </t-button>
+                  </div>
+                </div>
+                <div
+                  v-if="userData.superadmin"
+                  class="flex items-center space-x-4"
+                >
+                  <h2 class="flex-1 text-lg font-bold uppercase">
+                    CORREO DE ENVÍO
+                  </h2>
+                  <div>
+                    <div class="p-form-control mb-1">
+                      <t-input v-model="form.correo" type="text" />
+                    </div>
+                  </div>
+                  <div>
+                    <t-button
+                      class="p-btn p-btn-full w-full"
+                      @click="updateCorreo"
+                    >
+                      Actualizar
                     </t-button>
                   </div>
                 </div>
@@ -45,6 +68,8 @@
                       <th class="">Teléfono</th>
                       <th class="">Fecha</th>
                       <th class="">-</th>
+                      <th class="">Orden</th>
+                      <th class="">Qr</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -124,6 +149,38 @@
                           >
                         </template>
                       </td>
+                      <td class="text-xs">
+                        <a
+                          v-if="item.informacion_inicial"
+                          :href="
+                            'https://mitag.co/wp-admin/post.php?post=' +
+                            item.informacion_inicial.id +
+                            '&action=edit'
+                          "
+                          target="_blank"
+                          class="text-primary-900 font-bold"
+                        >
+                          <template v-if="item.informacion_inicial.billing">
+                            {{ item.informacion_inicial.id }} -
+                            {{ item.informacion_inicial.billing.email }} -
+                            {{ item.informacion_inicial.billing.first_name }}
+                            {{ item.informacion_inicial.billing.last_name }}
+                          </template>
+                          <template v-else>
+                            {{ item.informacion_inicial.id }}</template
+                          >
+                        </a>
+                        <template v-else>Creado en la app</template>
+                      </td>
+                      <td>
+                        <a
+                          :href="
+                            $axios.defaults.baseURL + 'getQr?id=' + item.id
+                          "
+                          target="_blank"
+                          ><i class="fas fa-qrcode"></i
+                        ></a>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -168,17 +225,26 @@ export default {
     return {
       form: {
         tag: '',
+        correo: '',
       },
       ser: '',
       tags: [],
     }
   },
   mounted() {
+    console.log('AXIOS', this.$axios.defaults.baseURL)
     this.getTagsU()
+    if (this.userData.superadmin) {
+      this.getAdminEmail()
+    }
   },
   methods: {
     cambiarTag(id) {
       this.ser = id
+    },
+    async getAdminEmail() {
+      const correo = await this.getCorreo()
+      if (!correo.eror) this.form.correo = correo
     },
     getTagsU() {
       // this.tags = await this.getTagsList()
@@ -218,6 +284,24 @@ export default {
         })
       } else {
         this.$noty.error(data.message, {
+          theme: 'bootstrap-v4',
+          layout: 'topCenter',
+        })
+      }
+      // this.userData.leads.push(data)
+    },
+    async updateCorreo() {
+      this.form.tag = ''
+      const data = await this.agregarCorreo(this.form.correo)
+
+      if (data.error === false) {
+        this.getTagsU()
+        this.$noty.success(data.mensaje, {
+          theme: 'bootstrap-v4',
+          layout: 'topCenter',
+        })
+      } else {
+        this.$noty.error(data.mensaje, {
           theme: 'bootstrap-v4',
           layout: 'topCenter',
         })

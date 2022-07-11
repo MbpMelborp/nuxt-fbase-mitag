@@ -89,3 +89,9 @@ https://console.firebase.google.com/u/1/project/mitag-b1e8a/overview?hl=es-419
 
 https://us-central1-mitag-b1e8a.cloudfunctions.net/
 http://localhost:5001/mitag-b1e8a/us-central1/
+
+
+TODO
+- dos administrados
+- pendiente terminos y redes
+- asociar correo con info del pedido

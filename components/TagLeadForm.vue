@@ -106,9 +106,10 @@ export default {
   data() {
     return {
       form: {
-        nombre: '',
-        email: '',
-        phone: '',
+        nombre: process.env.NODE_ENV !== 'production' ? `Nombre1` : '',
+        email:
+          process.env.NODE_ENV !== 'production' ? `juanma.osoc@gmail.com` : '',
+        phone: process.env.NODE_ENV !== 'production' ? `3007856334` : '',
         phone_info: '',
       },
       bindProps: {
@@ -128,6 +129,7 @@ export default {
       return dirty || validated ? valid : null
     },
     phoneChange(phone, phoneo) {
+      this.form.phone = phone
       this.form.phone_info = phoneo
     },
     async submitUsuario() {

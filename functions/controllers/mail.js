@@ -29,5 +29,19 @@ const sendMail = function (data) {
     return { error: true, message: 'Mail no enviado', info: error }
   }
 }
+const getAdmin = function () {
+  return db
+    .collection('correo')
+    .doc('admin')
+    .get()
+    .then((doc) => {
+      return doc.data().mail
+    })
+    .catch((error) => {
+      console.error('🚨 -> ERROR MAIL 🎮  getAdmin', error)
+      return { error: true, message: 'Mail no encontrado', info: error }
+    })
+}
 
 exports.sendMail = sendMail
+exports.getAdmin = getAdmin
