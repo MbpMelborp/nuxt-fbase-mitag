@@ -10,7 +10,7 @@
           <div class="wrap_form_col row-span-3">
             <div class="mb-16">
               <client-only>
-                <div v-if="edicion" class="mx-auto w-72 h-72 mb-8">
+                <div v-if="edicion && img.src" class="mx-auto w-72 h-72 mb-8">
                   <cropper
                     ref="cropper"
                     class="twitter-cropper"
@@ -289,7 +289,7 @@
                 name="celular"
                 :rules="{ required: true }"
               >
-                <div class="p-form-control">
+                <div class="p-form-control z-20">
                   <label for="celular" class="p-label"> Celular </label>
                   <vue-tel-input
                     v-model="phone"
@@ -383,7 +383,9 @@
                     />
                     <span class="ml-2 text-sm"
                       >Acepto la
-                      <a href="https://mitag.co/politica-de-tratamiento-de-datos-de-la-informacion/" target="_blank"
+                      <a
+                        href="https://mitag.co/politica-de-tratamiento-de-datos-de-la-informacion/"
+                        target="_blank"
                         >política de tratamiento de datos</a
                       ></span
                     >

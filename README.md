@@ -81,7 +81,7 @@ firebase deploy
 firebase deploy --only hosting
 
 Parar emulador
-lsof -t -i:8080 -i:9000 -i:9099 -i:9199 -i:9090 -i:8085 -i:4000 | xargs kill -9
+lsof -t -i:8080 -i:9000 -i:9099 -i:9199 -i:9090 -i:8085 -i:4000 | xargs kill -9;firebase emulators:start --import=exports --export-on-exit=./exports
 
 Exportar emulador firebase emulators:export exports
 
@@ -90,8 +90,8 @@ https://console.firebase.google.com/u/1/project/mitag-b1e8a/overview?hl=es-419
 https://us-central1-mitag-b1e8a.cloudfunctions.net/
 http://localhost:5001/mitag-b1e8a/us-central1/
 
-
 TODO
+
 - dos administrados
 - pendiente terminos y redes
 - asociar correo con info del pedido

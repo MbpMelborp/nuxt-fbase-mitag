@@ -10,7 +10,8 @@
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint:prettier": "prettier --check .",
     "lint": "npm run lint:js && npm run lint:prettier",
-    "lintfix": "prettier --write --list-different . && npm run lint:js -- --fix"
+    "lintfix": "prettier --write --list-different . && npm run lint:js -- --fix",
+    "emulators": "lsof -t -i:8080 -i:9000 -i:9099 -i:9199 -i:9090 -i:8085 -i:4000 | xargs kill -9;firebase emulators:start --import=exports --export-on-exit=./exports"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",

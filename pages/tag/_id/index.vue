@@ -43,6 +43,11 @@ export default {
           path: '/',
           params: { tag: 'not_foud' },
         })
+      } else if (!this.info.doc.usado) {
+        this.$router.push({
+          path: '/tag/' + this.tag + '/create',
+          params: { tag: 'createfromview' },
+        })
       }
     },
   },

@@ -75,19 +75,23 @@ exports.tag = functions.https.onRequest((req, res) => {
               if (query.file) {
                 return TAG_VCARD.generateCard(query.id, tag)
                   .then((vcard) => {
-                    console.log(
-                      '✅  -> tagCreateUpdate archivo generado',
-                      vcard
-                    )
-                    res.set(
-                      'Content-Type',
-                      `text/vcard; name="${query.id}.vcf"`
-                    )
-                    res.set(
-                      'Content-Disposition',
-                      `inline; filename="${query.id}.vcf"`
-                    )
-                    res.send(vcard)
+                    if (!query.text) {
+                      console.log(
+                        '✅  -> tagCreateUpdate archivo generado',
+                        vcard
+                      )
+                      res.set(
+                        'Content-Type',
+                        `text/vcard; name="${query.id}.vcf"`
+                      )
+                      res.set(
+                        'Content-Disposition',
+                        `inline; filename="${query.id}.vcf"`
+                      )
+                      res.send(vcard)
+                    } else {
+                      res.status(200).send(vcard)
+                    }
                   })
                   .catch((error) => {
                     // console.log('🚨 -> ERROR tagCreateUpdate generado archivo', error)

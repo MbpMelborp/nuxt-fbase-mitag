@@ -252,4 +252,7 @@ export default {
     }
   }
 }
+.navAction {
+  @apply text-primary-500 p-3 ml-1;
+}
 </style>

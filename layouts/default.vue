@@ -25,7 +25,7 @@ body {
   }
 }
 .p-form-control {
-  @apply relative z-0 w-full mb-8;
+  @apply relative w-full mb-8;
   label {
     @apply block text-primary-700 text-sm font-bold mb-2;
   }

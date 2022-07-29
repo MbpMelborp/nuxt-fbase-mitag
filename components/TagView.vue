@@ -75,14 +75,19 @@
               >
             </div>
             <div class="tag-btn">
-              <a
+              <!-- <a
                 :href="`${$axios.defaults.baseURL}tag?id=${tagInfo.tag}&file=true`"
                 target="_blank"
-                class="btn-link-light btn-file"
+                class="hidden btn-link-light btn-file"
               >
                 <span>Descargar perfil </span
                 ><i class="far fa-address-card"></i>
-              </a>
+              </a> -->
+
+              <button class="w-full btn-link-light btn-file" @click="download">
+                <span>Descargar perfil </span
+                ><i class="far fa-address-card"></i>
+              </button>
             </div>
 
             <div class="tag-link">
@@ -532,6 +537,23 @@ export default {
         })
       }
     },
+    download() {
+      this.$axios
+        .get('tag?id=' + this.tagInfo.tag + '&text=true&file=true', {})
+        .then((result) => {
+          console.log('res', result)
+          const element = document.createElement('a')
+          element.setAttribute(
+            'href',
+            'data:text/vcard;charset=utf-8,' + encodeURIComponent(result.data)
+          )
+          element.setAttribute('download', this.tagInfo.tag + '.vcf')
+          element.style.display = 'none'
+          document.body.appendChild(element)
+          element.click()
+          document.body.removeChild(element)
+        })
+    },
   },
 }
 </script>
@@ -600,9 +622,9 @@ export default {
             }
           }
           .perfil-iconos {
-            @apply flex flex-wrap justify-center w-full;
+            @apply flex flex-wrap justify-center w-full mb-4;
             .icono-view {
-              @apply text-3xl w-12 h-12 bg-primary-400 text-light leading-none mb-2 mx-2 rounded-full px-2 py-2;
+              @apply flex flex-wrap justify-center items-center text-3xl w-14 h-14 bg-primary-400 text-light leading-none mb-2 mx-2 rounded-full px-2 py-2;
               a {
                 @apply text-light hover:text-primary-100 transition-all;
               }

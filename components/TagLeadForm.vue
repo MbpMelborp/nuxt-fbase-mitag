@@ -81,13 +81,20 @@
       <h5>
         <template v-if="!enviado"> O descarga el </template>
         <template v-else> Descarga el </template>
-        <a
+        <!-- <a
           :href="`${$axios.defaults.baseURL}tag?id=${info.tag}&file=true`"
           target="_blank"
           class="text-primary-900 underline-light-900"
         >
           <span>contacto </span><i class="far fa-address-card"></i>
-        </a>
+        </a> -->
+        <button
+          target="_blank"
+          class="text-primary-900 underline-light-900"
+          @click="download"
+        >
+          <span>contacto </span><i class="far fa-address-card"></i>
+        </button>
       </h5>
     </div>
   </div>
@@ -138,9 +145,11 @@ export default {
         this.form.tag = this.info.tag
         this.form.leads = this.info.leads
         const resultadoRegistro = await this.enviarLead(this.form)
-
+        console.log('RES', resultadoRegistro)
         if (resultadoRegistro.error === false) {
+          this.download()
           this.enviado = true
+          this.habilitarBoton = true
           this.formleads = resultadoRegistro.leads
           this.$noty.success(resultadoRegistro.mensaje, {
             theme: 'bootstrap-v4',
@@ -161,6 +170,23 @@ export default {
         })
         console.error('└──🚨 | ⛹  >  ACTION submitUsuario data', e)
       }
+    },
+    download() {
+      this.$axios
+        .get('tag?id=' + this.info.tag + '&text=true&file=true', {})
+        .then((result) => {
+          console.log('res', result)
+          const element = document.createElement('a')
+          element.setAttribute(
+            'href',
+            'data:text/vcard;charset=utf-8,' + encodeURIComponent(result.data)
+          )
+          element.setAttribute('download', this.info.tag + '.vcf')
+          element.style.display = 'none'
+          document.body.appendChild(element)
+          element.click()
+          document.body.removeChild(element)
+        })
     },
   },
 }

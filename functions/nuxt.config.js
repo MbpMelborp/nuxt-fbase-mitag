@@ -2,6 +2,10 @@
 module.exports = {
   target: 'sever',
   ssr: false,
+  server: {
+    port: 3000,
+    // host: 0,
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'MiTag',
@@ -107,7 +111,7 @@ module.exports = {
             // //   process.env.NODE_ENV !== 'production' ? 'firebase-auth' : '[id]', // default
             // static: false,
             // // enablePersistence: true,
-            emulatorPort: process.env.NODE_ENV === 'development' ? 8080 : false,
+            emulatorPort: process.env.NODE_ENV === 'development' ? 8081 : false,
           },
           functions: {
             emulatorPort: process.env.NODE_ENV === 'development' ? 5001 : false,
