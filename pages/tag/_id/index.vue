@@ -31,6 +31,7 @@ export default {
       })
     } else {
       this.tag = this.$route.params.id
+      this.tag = this.tag.normalize('NFD').replace(/[\u0300-\u036F]/g, '')
       this.getTag()
     }
   },

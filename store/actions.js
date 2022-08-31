@@ -307,6 +307,7 @@ export default {
     try {
       // if (this.$fire.auth !== null) {
       console.info('└──❕ | ⛹  >  ACTION getTag id', payload)
+      payload = payload.normalize('NFD').replace(/[\u0300-\u036F]/g, '')
       if (payload) {
         return this.$fire.firestore
           .collection('tags')
