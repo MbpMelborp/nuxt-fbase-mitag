@@ -90,21 +90,15 @@
             </button>
           </li>
           <li>
-            <button @click="aDir = true">
-              <i class="fas fa-map-marker"></i>
-              <span>Dirección</span>
-            </button>
-          </li>
-          <li>
             <button @click="aNot = true">
               <i class="fas fa-sticky-note"></i>
               <span>Nota</span>
             </button>
           </li>
           <li>
-            <button @click="aLink = true">
-              <i class="fas fa-link"></i>
-              <span>Enlace</span>
+            <button @click="aDir = true">
+              <i class="fas fa-map-marker"></i>
+              <span>Dirección</span>
             </button>
           </li>
           <li>
@@ -117,6 +111,12 @@
             <button @click="aMedia = true">
               <i class="fas fa-photo-video"></i>
               <span>Medios</span>
+            </button>
+          </li>
+          <li>
+            <button @click="aLink = true">
+              <i class="fas fa-link"></i>
+              <span>Enlace</span>
             </button>
           </li>
         </ul>
@@ -685,12 +685,14 @@ export default {
         li {
           @apply text-sm font-bold w-full;
           button {
-            @apply w-full flex space-x-4 items-center justify-around rounded-lg px-4 py-1 bg-gradient-to-br from-primary-100 to-primary-200 shadow-lg;
+            @apply w-full flex space-x-2 items-center justify-start rounded-lg px-1 py-1 bg-gradient-to-br from-primary-100 to-primary-200 shadow-lg;
             i {
-              @apply h-8 w-8 text-center shadow-inner text-sm block rounded-full pt-1 bg-primary-400 text-light;
+              width: 30px;
+              height: 30px;
+              @apply text-center shadow-inner text-sm block rounded-full pt-1 bg-primary-400 text-light;
             }
             span {
-              @apply flex-1 block leading-3 text-left;
+              @apply block text-left;
             }
           }
         }

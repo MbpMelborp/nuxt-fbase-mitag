@@ -1,0 +1,19 @@
+{
+  "name": "Wdqc.jpg",
+  "bucket": "mitag-b1e8a.appspot.com",
+  "contentType": "application/octet-stream",
+  "metageneration": 1,
+  "generation": 1662430400200,
+  "storageClass": "STANDARD",
+  "etag": "someETag",
+  "contentDisposition": "inline",
+  "contentEncoding": "identity",
+  "downloadTokens": [
+    "5e2a6931-e707-4138-9edc-25a0fa3d5735"
+  ],
+  "timeCreated": "2022-09-06T02:13:20.199Z",
+  "updated": "2022-09-06T02:13:20.207Z",
+  "size": 362167,
+  "md5Hash": "wI/v68pEzxKQxkYR39rs3Q==",
+  "crc32c": "1597728240"
+}

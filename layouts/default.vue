@@ -1,7 +1,9 @@
 <template>
   <div class="font-sans">
     <AppNav></AppNav>
+
     <Nuxt></Nuxt>
+
     <AppFooter></AppFooter>
   </div>
 </template>
@@ -270,5 +272,8 @@ body {
       }
     }
   }
+}
+.vti__dropdown-list {
+  z-index: 999;
 }
 </style>

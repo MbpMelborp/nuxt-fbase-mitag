@@ -670,10 +670,12 @@ export default {
         const base64Canvas = canvas.toDataURL('image/jpeg')
         this.blob = base64Canvas
         const blobRaw = base64Canvas.split(',')[1]
-
+        const metadata = {
+          contentType: 'image/jpeg',
+        }
         const task = this.$fire.storage
           .ref(this.form.tag + '.jpg')
-          .putString(blobRaw, 'base64')
+          .putString(blobRaw, 'base64', metadata)
         // .put(this.blob, 'image/jpeg')
         task
           .then((snapshot) => snapshot.ref.getDownloadURL())
@@ -687,6 +689,7 @@ export default {
 
             const actualizarImagen = await this.editarUsuario({
               foto: this.form.foto,
+              // fotob64: base64Canvas,
               tag: this.form.tag,
             })
 

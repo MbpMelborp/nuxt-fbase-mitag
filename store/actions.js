@@ -124,7 +124,7 @@ export default {
             dispatch('getUserData')
             return {
               error: false,
-              mensaje: 'El perifl se ha actualizado con éxito',
+              mensaje: 'El perfil se ha actualizado con éxito',
             }
           })
           .catch((error) => {

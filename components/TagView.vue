@@ -84,27 +84,15 @@
                 ><i class="far fa-address-card"></i>
               </a> -->
 
-              <button class="w-full btn-link-light btn-file" @click="download">
+              <button
+                class="w-full btn-link-light btn-file"
+                @click="aLead = true"
+              >
                 <span>Descargar perfil </span
                 ><i class="far fa-address-card"></i>
               </button>
             </div>
 
-            <div class="tag-link">
-              <i class="fas fa-qrcode"></i>
-              <client-only>
-                <div class="flex space-x-6 items-center justify-center">
-                  <a :href="`${location.origin}/tag/${tagInfo.tag}`">
-                    {{ `tags/${tagInfo.tag}` }}
-                  </a>
-                  <button
-                    @click="copiarUrl(`${location.origin}/tag/${tagInfo.tag}`)"
-                  >
-                    <i class="fas fa-clipboard"></i>
-                  </button>
-                </div>
-              </client-only>
-            </div>
             <div class="tag-share">
               <h4>Compartir en redes</h4>
               <div class="tag-share-wraper">
@@ -244,9 +232,10 @@
 
           <div class="perfil-wrap-int-top-info3">
             <div class="perfil-wrap-int-top-info3-wrap">
-              <div class="perfil-wrap-int-top-info3-wrap2">
+              <div class="perfil-wrap-int-top-info3-wrap2" @click="downqr()">
                 <client-only>
                   <qr-code
+                    ref="qr"
                     :text="`${location.origin}/tag/${tagInfo.tag}`"
                     :size="lectura ? 100 : 240"
                     color="#666666"
@@ -258,6 +247,21 @@
                 </client-only>
               </div>
             </div>
+          </div>
+          <div class="tag-link">
+            <i class="fas fa-qrcode"></i>
+            <client-only>
+              <div class="flex space-x-6 items-center justify-center">
+                <a :href="`${location.origin}/tag/${tagInfo.tag}`">
+                  {{ `tags/${tagInfo.tag}` }}
+                </a>
+                <button
+                  @click="copiarUrl(`${location.origin}/tag/${tagInfo.tag}`)"
+                >
+                  <i class="fas fa-clipboard"></i>
+                </button>
+              </div>
+            </client-only>
           </div>
         </div>
       </div>
@@ -528,6 +532,15 @@ export default {
     console.log('ROUTE', this.$route, this.location)
   },
   methods: {
+    downqr() {
+      const canvas = this.$refs.qr // document.getElementById('qr')
+      console.log(canvas.$el.firstChild)
+      const dataURL = canvas.$el.firstChild.toDataURL('image/png')
+      const link = document.createElement('a')
+      link.download = 'qr.png'
+      link.href = dataURL
+      link.click()
+    },
     copiarUrl(url) {
       if (!process.server) {
         navigator.clipboard.writeText(url)
@@ -606,12 +619,7 @@ export default {
           .btn-file {
             @apply md:w-80 text-lg flex justify-around space-x-8 mx-auto;
           }
-          .tag-link {
-            @apply text-2xl leading-normal mt-0 mb-4 font-bold;
-            i {
-              @apply mr-2 text-lg text-secondary-400;
-            }
-          }
+
           .tag-btn {
             @apply mb-8;
           }
@@ -652,7 +660,7 @@ export default {
             .perfil-wrap-int-top-info3-wrap2 {
               @apply w-full lg:w-9/12 px-4;
               .qr-code-perfil {
-                @apply w-1/2 mx-auto p-4 rounded-lg border-4 border-primary-100 bg-light mb-8;
+                @apply w-1/2 mx-auto p-4 rounded-lg border-4 border-primary-100 bg-light mb-2;
               }
             }
           }
@@ -735,5 +743,14 @@ export default {
       }
     }
   }
+}
+.tag-link {
+  @apply text-2xl leading-normal mt-0 mb-8 font-bold;
+  i {
+    @apply mr-2 text-lg text-secondary-400;
+  }
+}
+.qr-code-perfil {
+  cursor: pointer;
 }
 </style>

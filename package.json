@@ -11,17 +11,20 @@
     "lint:prettier": "prettier --check .",
     "lint": "npm run lint:js && npm run lint:prettier",
     "lintfix": "prettier --write --list-different . && npm run lint:js -- --fix",
-    "emulators": "lsof -t -i:8080 -i:9000 -i:9099 -i:9199 -i:9090 -i:8085 -i:4000 | xargs kill -9;firebase emulators:start --import=exports --export-on-exit=./exports"
+    "emulators": "lsof -t -i:8081 -i:9000 -i:9099 -i:9199 -i:9090 -i:8085 -i:4000 | xargs kill -9;firebase emulators:start --import=exports --export-on-exit=./exports",
+    "deployh": "firebase deploy --only hosting"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/firebase": "^8.2.0",
+    "@nuxtjs/pwa": "^3.3.5",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "axios-retry": "^3.2.4",
     "core-js": "^3.19.3",
     "firebase": "^9.6.4",
     "nuxt": "^2.15.8",
     "nuxt-buefy": "^0.4.14",
+    "nuxt-delay-hydration": "^0.4.5",
     "parse-google-place": "^1.3.0",
     "postcss-custom-properties": "^12.1.3",
     "vee-validate": "^3.4.0",

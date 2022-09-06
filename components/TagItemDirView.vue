@@ -53,7 +53,7 @@
       <b v-if="tipo"> {{ tipo[0].text }} </b>
       <div class="text-left text-base">
         <button class="text-left" @click="aView = true">
-          {{ info.location.address }} - {{ info.detalle }}
+          <b> Ver mapa </b> - {{ info.detalle }}
         </button>
       </div>
 
@@ -129,13 +129,13 @@ export default {
   },
   methods: {
     async eliminar() {
-      const arrInfo = [...this.userData.info.telefonos]
+      const arrInfo = [...this.userData.info.direcciones]
 
       const newArr = arrInfo.filter((item) => {
         return this.info !== item
       })
       if (this.isLoggedIn) {
-        const resultado = await this.actualizarTelefonos(newArr)
+        const resultado = await this.actualizarDir(newArr)
         if (resultado.error === false) {
           this.$noty.success(resultado.mensaje, {
             theme: 'bootstrap-v4',

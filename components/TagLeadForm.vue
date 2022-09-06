@@ -54,7 +54,14 @@
             >
               <div class="p-form-control">
                 <label for="celular" class="p-label"> Celular </label>
-                <vue-tel-input
+                <t-input
+                  v-model="form.phone"
+                  name="celular"
+                  type="text"
+                  required
+                  :state="getValidationState(validationContext)"
+                />
+                <!-- <vue-tel-input
                   v-model="form.phone"
                   name="celular"
                   class="p-input"
@@ -63,7 +70,7 @@
                   :state="getValidationState(validationContext)"
                   v-bind="bindProps"
                   @input="phoneChange"
-                ></vue-tel-input>
+                ></vue-tel-input> -->
 
                 <span class="p-error">
                   {{ validationContext.errors[0] }}

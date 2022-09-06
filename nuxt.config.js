@@ -1,6 +1,6 @@
 // eslint-disable-next-line nuxt/no-cjs-in-config
 module.exports = {
-  target: 'sever',
+  target: 'static',
   ssr: false,
   server: {
     port: 3000,
@@ -24,19 +24,20 @@ module.exports = {
     },
     script: [
       {
+        rel: 'preload',
         src: 'https://kit.fontawesome.com/3c4bd3a972.js',
         crossorigin: 'anonymous',
       },
-      {
-        src: '//www.instagram.com/embed.js',
-      },
+      { rel: 'preload', src: '//www.instagram.com/embed.js' },
       {
         src: 'https://platform.twitter.com/widgets.js',
+        rel: 'preconnect',
       },
       {
         hid: 'maps-googleapis',
         src: `https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBextg5ie_El0O6y5TlpIbbXQeVgLavKO4`,
         defer: true,
+        rel: 'preload',
       },
     ],
   },
@@ -70,10 +71,12 @@ module.exports = {
     '@nuxtjs/tailwindcss',
     '@nuxtjs/moment',
     '@nuxtjs/dotenv',
+    // 'nuxt-delay-hydration',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    // '@nuxtjs/pwa',
     '@nuxtjs/dotenv',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
@@ -153,6 +156,17 @@ module.exports = {
     ],
     'vue-social-sharing/nuxt',
   ],
+  // pwa: {
+  //   meta: {
+  //     title: 'MiTag',
+  //     author: 'MiTag',
+  //   },
+  //   manifest: {
+  //     name: 'MiTag ',
+  //     short_name: 'MiTag',
+  //     lang: 'es',
+  //   },
+  // },
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
     configPath: 'tailwind.config.js',
@@ -167,7 +181,10 @@ module.exports = {
         ? 'https://us-central1-mitag-b1e8a.cloudfunctions.net/'
         : 'http://localhost:5001/mitag-b1e8a/us-central1/',
   },
-
+  // delayHydration: {
+  //   mode: 'init',
+  //   debug: process.env.NODE_ENV === 'development',
+  // },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     postcss: {

@@ -1,6 +1,6 @@
 <template>
   <div class="px-2">
-    <ValidationObserver v-slot="{ handleSubmit }">
+    <ValidationObserver ref="observerRef" v-slot="{ handleSubmit }">
       <form novalidate @submit.stop.prevent="handleSubmit(enviar)">
         <div>
           <div>
@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     async enviar() {
-      if (this.isLoggedIn) {
+      if (this.isLoggedIn && this.$refs.observerRef.flags.valid) {
         const resultado = await this.agregarEmail(this.email)
         if (resultado.error === false) {
           this.$noty.success(resultado.mensaje, {
@@ -78,6 +78,11 @@ export default {
             layout: 'topCenter',
           })
         }
+      } else {
+        this.$noty.error('Por favor verifica la información', {
+          theme: 'bootstrap-v4',
+          layout: 'topCenter',
+        })
       }
     },
     getValidationState({ dirty, validated, valid = null }) {

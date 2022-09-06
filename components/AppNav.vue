@@ -2,7 +2,10 @@
   <nav id="header" :class="isScrolled ? 'scrolled bg-light' : ''">
     <div class="header-container">
       <div class="header-container-int">
-        <nuxt-link class="logo-link toggleColour" to="/">
+        <nuxt-link
+          class="logo-link toggleColour"
+          :to="isLoggedIn && userData ? `/tag/${userData.tag}/edit` : '/'"
+        >
           <svg
             class="h-12 fill-current inline"
             xmlns="http://www.w3.org/2000/svg"

@@ -5,20 +5,18 @@
   },
   "functions": {
     "source": "functions",
-    "predeploy": [
-      "npm run build && rm -rf functions/nuxt && mkdir functions/nuxt/ && cp -r .nuxt/ functions/nuxt/ && cp nuxt.config.js functions/"
-    ]
+    "predeploy": [""]
   },
   "hosting": {
     "predeploy": [
-      "rm -rf public/* && mkdir -p public/_nuxt && cp -r .nuxt/dist/client/ public/_nuxt && cp -a static/. public/"
+      "npm run generate && rm -rf public/* && mkdir -p public/ && cp -r dist/* public/"
     ],
     "public": "public",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
-        "function": "ssrapp"
+        "destination": "/index.html"
       },
       {
         "source": "/api/**",
@@ -37,7 +35,7 @@
       "port": 5001
     },
     "firestore": {
-      "port": 8080
+      "port": 8081
     },
     "database": {
       "port": 9000
@@ -55,9 +53,5 @@
       "enabled": true,
       "port": 4000
     }
-  },
-  "rewrites": {
-    "source": "**",
-    "functions": "ssrapp"
   }
 }

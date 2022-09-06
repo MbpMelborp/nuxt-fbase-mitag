@@ -1,6 +1,6 @@
 <template>
   <div class="px-2">
-    <ValidationObserver v-slot="{ handleSubmit }">
+    <ValidationObserver ref="observerRef" v-slot="{ handleSubmit }">
       <form novalidate @submit.stop.prevent="handleSubmit(enviar)">
         <div>
           <div>
@@ -59,7 +59,7 @@ extend('url', {
   validate(value) {
     if (value) {
       /* eslint-disable */
-      return /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(
+      return /^(?:(?:https?|http):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(
         value
       )
     }
@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     async enviar() {
-      if (this.isLoggedIn) {
+      if (this.isLoggedIn && this.$refs.observerRef.flags.valid) {
         let resultado
         if (this.info) {
           let index
@@ -123,6 +123,11 @@ export default {
             layout: 'topCenter',
           })
         }
+      } else {
+        this.$noty.error('Por favor verifica la información', {
+          theme: 'bootstrap-v4',
+          layout: 'topCenter',
+        })
       }
     },
     getValidationState({ dirty, validated, valid = null }) {
