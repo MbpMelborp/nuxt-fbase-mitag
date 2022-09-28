@@ -1,49 +1,21 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 const cors = require('cors')({ origin: true })
-var QRCode = require('qrcode-svg')
-var Stream = require('stream')
 const Sharp = require('sharp')
 
 admin.initializeApp()
-const db = admin.firestore()
 
 const TAG_CONTROLLER = require('./controllers/tags')
 const TAG_VCARD = require('./controllers/vcard')
 const MAIL_CONTROLER = require('./controllers/mail')
-// const db = admin.firestore()
-
-// VCARD
-const vCardsJS = require('vcards-js')
-
-//FILES
-const fs = require('fs')
-
-const { Nuxt } = require('nuxt')
-const nuxtConfig = require('./nuxt.config.js')
-const config = {
-  ...nuxtConfig,
-  dev: false,
-  debug: false,
-  buildDir: 'nuxt',
-  publicPath: 'public',
-}
-
-const nuxt = new Nuxt(config)
-nuxt.ready()
-exports.ssrapp = functions.https.onRequest(async (req, res) => {
-  try {
-    await nuxt.ready()
-    const result = await nuxt.renderRoute(req.path) // Returns { html, error, redirected }
-    res.send(result.html)
-  } catch (error) {
-    res.send(error)
-  }
-})
 
 /**
  * API
- *
+ * end point: https://us-central1-<project-id>.cloudfunctions.net/api/tag
+ * @param {functions.https.Request} req
+ * @param {functions.Response} res
+ * @param {functions.https.CallableContext} context
+ * @returns {Promise<void>}
  */
 exports.tag = functions.https.onRequest((req, res) => {
   try {
@@ -67,6 +39,11 @@ exports.tag = functions.https.onRequest((req, res) => {
         res.set('Access-Control-Max-Age', '3600')
         res.status(204).send('')
       } else if (req.method === 'GET') {
+        /**
+         * GET
+         * query: { id: 'tagId' }
+         * Trae la informcacion de un tag pasando el parametro id con el código del tag
+         */
         if (query.id) {
           console.log(`🏁 API tag onRequest GET ${query.id}`, `\n`)
           TAG_CONTROLLER.getTagById(query.id).then((tag) => {
@@ -110,6 +87,11 @@ exports.tag = functions.https.onRequest((req, res) => {
           res.status(500).json({ error: true, message: 'No id' })
         }
       } else if (req.method === 'POST') {
+        /**
+         * POST
+         * query: /tag , body informaci´on del tag a crear
+         * Guarda un nuevo tag en la base de datos
+         */
         console.log(`🏁 API tag onRequest POST`, query, `\n`)
         const list =
           'abcdefghijklmnropqrstuvwABCDEFGHIJKLMNPQRSTUVWXYZ123456789'
@@ -142,7 +124,11 @@ exports.tag = functions.https.onRequest((req, res) => {
 
 /**
  * API
- *
+ * end point: https://us-central1-<project-id>.cloudfunctions.net/api/mail
+ * @param {functions.https.Request} req
+ * @param {functions.Response} res
+ * @param {functions.https.CallableContext} context
+ * @returns {Promise<void>}
  */
 exports.mail = functions.https.onRequest((req, res) => {
   try {
@@ -165,9 +151,11 @@ exports.mail = functions.https.onRequest((req, res) => {
         res.set('Access-Control-Allow-Headers', 'Content-Type')
         res.set('Access-Control-Max-Age', '3600')
         res.status(204).send('')
-      } else if (req.method === 'GET') {
-        //
       } else if (req.method === 'POST') {
+        /**
+         * POST
+         * query: body envía un mail con la información del body
+         */
         console.log(`🏁 API mail onRequest POST`, query, `\n`)
 
         MAIL_CONTROLER.sendMail(body)
@@ -184,9 +172,18 @@ exports.mail = functions.https.onRequest((req, res) => {
     console.error(error)
   }
 })
+
 /**
  * CALLABLES
- *
+ * Crea funciones para consumir desde el front
+ */
+
+/**
+ * getTag
+ * @param {functions.https.CallableContext} context
+ * @param {Object} data
+ * @returns {Promise<Object>}
+ * Retorna la información de un tag pasando el id del tag
  */
 exports.getTag = functions.https.onCall((data, context) => {
   console.log(context.auth)
@@ -204,6 +201,13 @@ exports.getTag = functions.https.onCall((data, context) => {
   }
 })
 
+/**
+ * getQr
+ * @param {functions.https.CallableContext} context
+ * @param {Object} data
+ * @returns {Promise<Object>}
+ * Genera un qr pasando el id del tag
+ */
 exports.getQr = functions.https.onRequest((req, res) => {
   try {
     const body = req.body
@@ -256,83 +260,3 @@ exports.getQr = functions.https.onRequest((req, res) => {
     console.error(error)
   }
 })
-/**
- * TRIGGERS DE EN DOCUMENTOS
- *
- */
-/*
-exports.tagCreateUpdate = functions.firestore
-  .document('/tags/{tag}')
-  .onUpdate(async (change, context) => {
-    // console.log(
-    //   '🏁 tagCreateUpdate init ',
-    //   context.params.tag
-    //   // change.after.data(),
-    // )
-
-    const data = change.after.data()
-    const previousData = change.before.data()
-
-    // We'll only update if the name has changed.
-    // This is crucial to prevent infinite loops.
-    if (data == previousData) {
-      console.log('FINISH')
-      return null
-    }
-    const tagId = context.params.tag
-    const tagData = change.after.data()
-    const vcard = TAG_VCARD.generateCard(tagId, tagData)
-    console.log(previousData.vcard != vcard, previousData.vcard, vcard)
-    if (previousData.vcard != vcard) {
-      // return change.after.ref.set(
-      //   {
-      //     vcard: vcard,
-      //   },
-      //   { merge: true }
-      // )
-    } else {
-      return null
-    }
-
-    // return TAG_VCARD.generateCard(tagId, tagData)
-    //   .then((vcard) => {
-    //     // console.log('✅  -> tagCreateUpdate archivo generado', vcard)
-    //     return change.after.ref.set(
-    //       {
-    //         vcard: 222, //vcard,
-    //       },
-    //       { merge: true }
-    //     )
-    //   })
-    //   .catch((error) => {
-    //     // console.log('🚨 -> ERROR tagCreateUpdate generado archivo', error)
-    //     return false
-    //   })
-
-    //get as formatted string
-    //console.log('📧  -> tagCreateUpdate', vCard.getFormattedString())
-
-    // const bucket = admin.storage().bucket('vcards')
-    // bucket
-    //   .upload(file, {
-    //     // destination: 'vcards',
-    //     resumable: true,
-    //     public: true,
-    //   })
-    //   .then(async (data) => {
-    //     fs.unlinkSync(file)
-    //     const url = data[0].metadata.mediaLink
-    //     // let url = await bucket.ref(file).getDownloadURL()
-    //     console.log(
-    //       '✅  -> tagCreateUpdate archivo cargado',
-    //       data[0].metadata.mediaLink
-    //     )
-    //     tagRef.update({
-    //       vcard: url,
-    //     })
-    //   })
-    //   .catch((err) => {
-    //     console.log('🚨 -> ERROR tagCreateUpdate cargando archivo', err)
-    //   })
-  })
-*/

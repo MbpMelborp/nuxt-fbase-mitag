@@ -4,9 +4,10 @@ const db = admin.firestore()
 const MAIL_CONTROLER = require('./mail')
 
 /**
- *
- * @param {*} id
- * @returns object whit tag info
+ * getTagById
+ * @param {string} id
+ * @returns {Promise}
+ * Retorna un tag por su id
  */
 const getTagById = function (id) {
   try {
@@ -28,6 +29,12 @@ const getTagById = function (id) {
   }
 }
 
+/**
+ * getTagByEmail
+ * @param {*} email
+ * @returns
+ * Retorna un tag por el email del usuario
+ */
 const getTagByEmail = function (email) {
   if (email == undefined)
     return new Promise((resolve, reject) => {
@@ -52,7 +59,13 @@ const getTagByEmail = function (email) {
     return { error: true, message: 'Email no encontrado', info: error }
   }
 }
-
+/**
+ * createTag
+ * @param {*} id
+ * @param {*} infop
+ * @returns
+ * Crea un tag con la información almacenada en infop y el id del usuario asignado
+ */
 const createTag = function (id, infop) {
   try {
     return getTagById(id)

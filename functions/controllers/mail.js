@@ -2,11 +2,14 @@ const admin = require('firebase-admin')
 const db = admin.firestore()
 
 /**
- *
- * @param {*} id
- * @returns object whit tag info
+ * sendMail
+ * @param {string} to
+ * @param {string} subject
+ * @param {string} text
+ * @param {string} html
+ * @returns {Promise<*>}
+ * Envío de mail con el servicio de firebase
  */
-
 const sendMail = function (data) {
   try {
     return db
@@ -29,6 +32,12 @@ const sendMail = function (data) {
     return { error: true, message: 'Mail no enviado', info: error }
   }
 }
+/**
+ * getAdmin
+ * @param {string} id
+ * @returns {Promise<*>}
+ * Retorna la información de el mail de admin
+ */
 const getAdmin = function () {
   return db
     .collection('correo')

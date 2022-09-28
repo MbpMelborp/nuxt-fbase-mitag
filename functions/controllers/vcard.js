@@ -3,6 +3,13 @@ const db = admin.firestore()
 const vCardsJS = require('vcards-js')
 const axios = require('axios')
 
+/**
+ * generateCard
+ * @param {*} id
+ * @param {*} data
+ * @returns
+ * Genera la vcard de un tag en formato string para poder ser descargada como archivo
+ */
 exports.generateCard = async function (id, data) {
   try {
     const tagRef = db.collection('/tags').doc(id)
@@ -14,14 +21,13 @@ exports.generateCard = async function (id, data) {
     vCard.lastName = data.apellidos
     vCard.organization = data.empresa
 
-    // vCard.photo.embedFromFile(data.foto, 'JPEG')
     console.log('📷  -> generateCard', data.foto)
     if (data.foto) {
       const image = await axios.get(data.foto, {
         responseType: 'arraybuffer',
       })
       let returnedB64 = Buffer.from(image.data).toString('base64')
-      console.log('🚀 ~ file: vcard.js ~ line 32 ~ returnedB64', returnedB64)
+      console.log('🚀 ~ file: vcard.js  ~ returnedB64', returnedB64)
       vCard.photo.embedFromString(returnedB64, 'image/jpeg')
     }
 
@@ -74,59 +80,13 @@ exports.generateCard = async function (id, data) {
       phones.push(phone.tel)
     })
     vCard.cellPhone = phones
-
-    // const urls = []
-    // data.info.iconos.forEach((icono) => {
-    //   const red = icono.tipo.split('-')[1]
-    //   //vCard.socialUrls[red] = icono.url
-    //   urls.push({ title: red, url: icono.url })
-    // })
-    // let notas = ''
     let urlString = ''
-    // data.info.varios.forEach((vario) => {
-    //   if (vario.tipo == 'nota') {
-    //     notas += vario.titulo + '\n' + vario.nota + '\n\n'
-    //   }
-    //   if (vario.tipo == 'link') {
-    //     // vCard.socialUrls[vario.titulo] = vario.url
-    //     urls.push({ title: vario.titulo, url: vario.url })
-    //   }
-    // })
-    // if (notas != '') {
-    //   vCard.note = notas
-    // }
-    // if (urls.length > 0) {
-    //   urls.forEach((url, index) => {
-    //     urlString += 'item' + (index + 1) + '.URL:' + url.url + '\n'
-    //     urlString += 'item' + (index + 1) + '.X-ABLabel:' + url.title + '\n'
-    //   })
-
-    //   // let index = 0
-    //   // // eslint-disable-next-line guard-for-in
-    //   // for (let key in vCard.socialUrls) {
-    //   //   index++
-    //   //   if (vCard.socialUrls.hasOwnProperty(key) && vCard.socialUrls[key]) {
-    //   //     formattedVCardString +=
-    //   //       'item' + index + '.URL:' + vCard.socialUrls[key] + nl()
-    //   //     formattedVCardString += 'item' + index + '.X-ABLabel:' + key + nl()
-    //   //     // formattedVCardString += 'X-SOCIALPROFILE' + encodingPrefix + ';type=' + key + ':' + e(vCard.socialUrls[key]) + nl();
-    //   //   }
-    //   // }
-    // }
     const vCardString =
       vCard.getFormattedString().replace('END:VCARD', '') +
       (urlString != '' ? '\n' + urlString : '') +
       '\n' +
       'END:VCARD'
-    // console.log('CARD' + '\n', vCardString)
     return vCardString
-    // return tagRef
-    //   .update({
-    //     vcard: vCardString,
-    //   })
-    //   .then((resp) => {
-    //     return vCardString
-    //   })
   } catch (error) {
     console.error('🚨 -> ERROR VCARD 🎮  generateCard', error)
     return { error: true, message: 'La vcard no se pudo crear', info: error }
