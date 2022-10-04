@@ -5,8 +5,8 @@
         <div v-if="userData" class="hero-container-full">
           <div class="flex">
             <div class="manager_wrap lg:w-full">
-              <div class="manager_form_col flex space-x-4">
-                <div class="flex items-center space-x-4">
+              <div class="manager_form_col flex flex-col md:flex-row space-x-4">
+                <div class="flex flex-col md:flex-row items-center space-x-4">
                   <h2 class="flex-1 text-lg font-bold uppercase">
                     AGREGAR TAG
                   </h2>
@@ -26,7 +26,7 @@
                 </div>
                 <div
                   v-if="userData.superadmin"
-                  class="flex items-center space-x-4"
+                  class="flex flex-col md:flex-row items-center space-x-4"
                 >
                   <h2 class="flex-1 text-lg font-bold uppercase">
                     CORREO DE ENVÍO
@@ -48,40 +48,40 @@
               </div>
             </div>
           </div>
-          <div class="flex">
+          <div class="flex flex-col md:flex-row">
             <div
               class="manager_wrap"
-              :class="ser != '' ? 'lg:w-8/12' : 'lg:w-12/12'"
+              :class="ser != '' ? 'w-full lg:w-8/12' : 'w-full lg:w-12/12'"
             >
               <div class="manager_form_col">
                 <h2 class="text-lgl mb-8 font-bold uppercase">
                   LISTADO DE TAGS
                 </h2>
-                <table v-if="tags" class="tb">
-                  <thead>
-                    <tr>
-                      <th class="w-1/8">Tag</th>
-                      <th class="">Creado</th>
-                      <th class="">Usado</th>
-                      <th class="w-2/8">Email</th>
-                      <th class="">Nombre</th>
-                      <th class="">Teléfono</th>
-                      <th class="">Fecha</th>
-                      <th class="">-</th>
-                      <th class="">Orden</th>
-                      <th class="">Qr</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      v-for="(item, w) in tags"
-                      :key="w"
-                      :class="w % 2 === 0 ? 'bg-light-100' : 'bg-light-200'"
-                    >
-                      <td>
+                <div
+                  class="
+                    admin_list
+                    grid grid-cols-1
+                    md:grid-cols-4
+                    sm:grid-cols-2
+                    space-x-4 space-y-4
+                  "
+                  :class="
+                    ser != ''
+                      ? ' md:grid-cols-2 lg:grid-cols-3'
+                      : 'md:grid-cols-3 lg:grid-cols-4'
+                  "
+                >
+                  <div
+                    v-for="(item, w) in tags"
+                    :key="w + '-1'"
+                    class="border border-gray-200 rounded-lg p-4"
+                    :class="w % 2 === 0 ? 'bg-light-100' : 'bg-light-200'"
+                  >
+                    <dl class="flex space-x-2">
+                      <dt class="font-bold"><i class="fas fa-tags"></i></dt>
+                      <dd>
                         <template v-if="item.usado">
                           <button
-                            :key="'lead' + w + '_nq'"
                             class="text-primary-900 font-bold"
                             @click="cambiarTag(item.id)"
                           >
@@ -89,67 +89,71 @@
                           </button></template
                         >
                         <template v-else>
-                          <span :key="'lead' + w + '_np'">{{
-                            item.id
-                          }}</span></template
+                          <span>{{ item.id }}</span></template
                         >
-                      </td>
-                      <td>
+                      </dd>
+                    </dl>
+
+                    <dl class="flex space-x-2">
+                      <dt class="font-bold">Creado</dt>
+                      <dd>
                         {{
                           item.fecha_creacion
                             .toDate()
                             .toISOString()
                             .split('T')[0]
                         }}
-                      </td>
-                      <td>
+                      </dd>
+                    </dl>
+                    <dl class="flex space-x-2">
+                      <dt class="font-bold">Usado</dt>
+                      <dd>
                         <template v-if="item.usado">Usado</template
                         ><template v-else>No Usado</template>
-                      </td>
-                      <td>
+                      </dd>
+                    </dl>
+                    <dl class="flex space-x-2">
+                      <dt class="font-bold">Email</dt>
+                      <dd>
                         <p class="overflow-ellipsis overflow-hidden">
                           <template v-if="item.usado">
                             {{ item.email }}</template
                           ><template v-else>-</template>
                         </p>
-                      </td>
-                      <td class="overflow-ellipsis overflow-hidden">
+                      </dd>
+                    </dl>
+                    <dl class="flex space-x-2">
+                      <dt class="font-bold">Nombre</dt>
+                      <dd>
                         <span class="overflow-ellipsis overflow-hidden">
                           <template v-if="item.usado">
                             {{ item.primer_nombre }}
                             {{ item.apellidos }}</template
                           ><template v-else>-</template></span
                         >
-                      </td>
-                      <td>
+                      </dd>
+                    </dl>
+                    <dl class="flex space-x-2">
+                      <dt class="font-bold">Teléfono</dt>
+                      <dd>
                         <template v-if="item.usado">
                           {{ item.telefono_celular }}</template
                         ><template v-else>-</template>
-                      </td>
-                      <td v-if="item.usado">
-                        {{ item.creado.toDate().toISOString().split('T')[0] }}
-                      </td>
-                      <td v-else>-</td>
-                      <td>
+                      </dd>
+                    </dl>
+                    <dl class="flex space-x-2">
+                      <dt class="font-bold">Fecha</dt>
+                      <dd>
                         <template v-if="item.usado">
-                          <button
-                            :key="'lead' + w + '_nq'"
-                            class="text-primary-900 font-bold"
-                            @click="cambiarTag(item.id)"
-                          >
-                            Ver
-                          </button></template
-                        >
-                        <template v-else>
-                          <nuxt-link
-                            :to="'tag/' + item.id + '/create'"
-                            target="_blank"
-                            class="text-primary-900 font-bold"
-                            >Crear</nuxt-link
-                          >
-                        </template>
-                      </td>
-                      <td class="text-xs">
+                          {{
+                            item.creado.toDate().toISOString().split('T')[0]
+                          }}</template
+                        ><template v-else>-</template>
+                      </dd>
+                    </dl>
+                    <dl class="flex space-x-2">
+                      <dt class="font-bold">Orden</dt>
+                      <dd>
                         <a
                           v-if="item.informacion_inicial"
                           :href="
@@ -171,22 +175,70 @@
                           >
                         </a>
                         <template v-else>Creado en la app</template>
-                      </td>
-                      <td>
+                      </dd>
+                    </dl>
+                    <dl class="flex space-x-2">
+                      <dd class="flex space-x-4">
+                        <template v-if="item.usado">
+                          <button
+                            :key="'lead' + w + '_nq'"
+                            class="
+                              block
+                              my-2
+                              text-primary-900
+                              font-bold
+                              p-2
+                              bg-primary-100
+                              rounded-lg
+                            "
+                            @click="cambiarTag(item.id)"
+                          >
+                            Ver tag
+                          </button></template
+                        >
+                        <template v-else>
+                          <nuxt-link
+                            :to="'tag/' + item.id + '/create'"
+                            target="_blank"
+                            class="
+                              block
+                              my-2
+                              text-primary-900
+                              font-bold
+                              p-2
+                              bg-primary-100
+                              rounded-lg
+                            "
+                            >Crear</nuxt-link
+                          >
+                        </template>
                         <a
                           :href="
                             $axios.defaults.baseURL + 'getQr?id=' + item.id
                           "
+                          class="
+                            block
+                            my-2
+                            text-primary-900
+                            font-bold
+                            p-2
+                            bg-primary-100
+                            rounded-lg
+                          "
                           target="_blank"
-                          ><i class="fas fa-qrcode"></i
-                        ></a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                          ><i class="fas fa-qrcode"> </i> QR</a
+                        >
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
               </div>
             </div>
-            <div v-if="ser != ''" class="relative lg:w-4/12">
+            <div
+              v-if="ser != ''"
+              :id="'tag' + ser"
+              class="relative w-full lg:w-4/12"
+            >
               <button
                 class="btn-clo btn absolute right-0 top-0"
                 @click="ser = ''"
@@ -229,18 +281,22 @@ export default {
       },
       ser: '',
       tags: [],
+      admin: false,
     }
   },
   mounted() {
     console.log('AXIOS', this.$axios.defaults.baseURL)
     this.getTagsU()
+
     if (this.userData.superadmin) {
+      this.admin = true
       this.getAdminEmail()
     }
   },
   methods: {
     cambiarTag(id) {
       this.ser = id
+      location.hash = '#tag' + this.ser
     },
     async getAdminEmail() {
       const correo = await this.getCorreo()
@@ -342,12 +398,17 @@ export default {
 .iphone-t {
   @apply relative w-full max-w-sm rounded-3xl border-12 border-gray-800 bg-light;
   .content {
-    @apply aspect-w-9 aspect-h-16 w-full overflow-y-auto overflow-x-hidden select-none;
+    @apply w-full overflow-y-auto overflow-x-hidden select-none;
     .content_wrap {
       .perfilview-wrap {
         /* @apply pointer-events-none; */
       }
     }
+  }
+}
+.admin_list {
+  dd {
+    @apply text-sm;
   }
 }
 </style>

@@ -170,6 +170,9 @@ body {
       &.t-media {
         .item-embed {
           @apply text-primary-500 text-lg mb-0;
+          iframe {
+            @apply w-full;
+          }
         }
         .item-titulo {
           @apply text-primary-500 text-lg mb-0;
@@ -275,5 +278,10 @@ body {
 }
 .vti__dropdown-list {
   z-index: 999;
+}
+.item-embed {
+  iframe {
+    width: 100% !important;
+  }
 }
 </style>
