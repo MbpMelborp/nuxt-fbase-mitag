@@ -93,28 +93,6 @@
               </button>
             </div>
 
-            <div class="tag-share">
-              <h4>Compartir en redes</h4>
-              <div class="tag-share-wraper">
-                <ShareNetwork
-                  v-for="network in networks"
-                  :key="network.network"
-                  :network="network.network"
-                  :style="{ borderColor: network.color, color: network.color }"
-                  :url="sharing.url"
-                  :title="sharing.title"
-                  :description="sharing.description"
-                  :quote="sharing.quote"
-                  :hashtags="sharing.hashtags"
-                  :twitterUser="sharing.twitterUser"
-                  class="share-item"
-                >
-                  <i :class="network.icon"></i>
-                  <span>{{ network.name }}</span>
-                </ShareNetwork>
-              </div>
-            </div>
-
             <div class="o-tels">
               <i class="icon far fa-mobile"></i>
               <div class="tels">
@@ -246,6 +224,27 @@
                   </qr-code>
                 </client-only>
               </div>
+            </div>
+          </div>
+          <div class="tag-share">
+            <h4>Compartir en redes</h4>
+            <div class="tag-share-wraper">
+              <ShareNetwork
+                v-for="network in networks"
+                :key="network.network"
+                :network="network.network"
+                :style="{ borderColor: network.color, color: network.color }"
+                :url="sharing.url"
+                :title="sharing.title"
+                :description="sharing.description"
+                :quote="sharing.quote"
+                :hashtags="sharing.hashtags"
+                :twitterUser="sharing.twitterUser"
+                class="share-item"
+              >
+                <i :class="network.icon"></i>
+                <span>{{ network.name }}</span>
+              </ShareNetwork>
             </div>
           </div>
           <div class="tag-link">
@@ -638,20 +637,6 @@ export default {
               }
             }
           }
-          .tag-share {
-            h4 {
-              @apply text-sm mb-2 uppercase;
-            }
-            .tag-share-wraper {
-              @apply flex flex-wrap justify-center w-full items-center;
-              a.share-item {
-                @apply px-2 py-1 m-1 text-xs border rounded block transition-all ease-in-out;
-                i {
-                  @apply mr-1;
-                }
-              }
-            }
-          }
         }
         .perfil-wrap-int-top-info3 {
           @apply mt-10 py-10 border-t border-primary-200 text-center;
@@ -752,5 +737,19 @@ export default {
 }
 .qr-code-perfil {
   cursor: pointer;
+}
+.tag-share {
+  h4 {
+    @apply text-sm mb-2 uppercase;
+  }
+  .tag-share-wraper {
+    @apply flex flex-wrap justify-center w-full items-center;
+    a.share-item {
+      @apply px-2 py-1 m-1 text-xs border rounded block transition-all ease-in-out;
+      i {
+        @apply mr-1;
+      }
+    }
+  }
 }
 </style>
